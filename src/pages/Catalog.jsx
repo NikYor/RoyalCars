@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import CarCard from '../components/CarCard';
-import { getAllCars } from '../services/carService'; // adjust path if needed
+import { getAllCars } from '../services/carService';
 
 const Catalog = () => {
   const [cars, setCars] = useState([]);
@@ -10,7 +10,7 @@ const Catalog = () => {
     const fetchCars = async () => {
       try {
         const data = await getAllCars();
-        setCars(data); // assuming backend returns an array of car objects
+        setCars(data);
       } catch (err) {
         setError('Failed to load cars');
         console.error(err);

@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000/api/cars'; // Replace with your actual backend URL
+const BASE_URL = 'http://localhost:3000/api/cars';
 
 export const getAllCars = async () => {
   const res = await fetch(BASE_URL);

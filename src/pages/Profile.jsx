@@ -70,7 +70,6 @@ const Profile = () => {
       {isAdmin && (
         <>
           <p>You are an admin!</p>
-          {/* I WANT HERE BUTTON LINK TO CREATE CAR FORM  */}
           <div className="text-center mb-3">
             <NavLink to="/cars/create" className="btn btn-primary">
               Create New Car
