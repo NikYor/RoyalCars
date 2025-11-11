@@ -48,3 +48,14 @@ export const deleteCar = async (id, token) => {
   if (!res.ok) throw new Error('Failed to delete car');
   return res.json();
 };
+
+export const getMyCars = async () => {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch(`${BASE_URL}/my-cars`, {
+    headers: { Authorization: `${token}` },
+  });
+
+  if (!res.ok) throw new Error('Failed to fetch your cars');
+  return await res.json();
+};

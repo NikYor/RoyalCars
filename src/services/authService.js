@@ -48,7 +48,7 @@ export const requestAdmin = async () => {
     throw new Error(error.message || 'Request failed');
   }
 
-  return await res.json(); // e.g. { message: 'Request sent' }
+  return await res.json();
 };
 
 export const getPendingRequests = async () => {
@@ -59,7 +59,7 @@ export const getPendingRequests = async () => {
   });
 
   if (!res.ok) throw new Error('Failed to fetch requests');
-  return await res.json(); // { users: [...] }
+  return await res.json();
 };
 
 export const approveAdmin = async (userId) => {
@@ -75,7 +75,7 @@ export const approveAdmin = async (userId) => {
   });
 
   if (!res.ok) throw new Error('Approval failed');
-  return await res.json(); // { message: 'User promoted to admin' }
+  return await res.json();
 };
 
 
