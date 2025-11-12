@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
-import { loginRequest } from '../services/authService';
+import { loginRequest, logoutRequest } from '../services/authService';
 
 export const AuthContext = createContext();
 
@@ -22,7 +22,8 @@ const AuthProvider = ({ children }) => {
     setToken(localStorage.getItem('token'));
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await logoutRequest();
     localStorage.removeItem('auth');
     localStorage.removeItem('token');
     setUser(null);

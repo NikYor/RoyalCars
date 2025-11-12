@@ -1,3 +1,5 @@
+import { secureFetch } from "./authService";
+
 const BASE_URL = 'http://localhost:3000/api/cars';
 
 export const getAllCars = async () => {
@@ -13,11 +15,10 @@ export const getCarById = async (id) => {
 };
 
 export const createCar = async (carData, token) => {
-  const res = await fetch(BASE_URL, {
+  const res = await secureFetch(BASE_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `${token}`,
     },
     body: JSON.stringify(carData),
   });
@@ -26,11 +27,10 @@ export const createCar = async (carData, token) => {
 };
 
 export const updateCar = async (id, carData, token) => {
-  const res = await fetch(`${BASE_URL}/${id}`, {
+  const res = await secureFetch(`${BASE_URL}/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `${token}`,
     },
     body: JSON.stringify(carData),
   });
@@ -39,11 +39,8 @@ export const updateCar = async (id, carData, token) => {
 };
 
 export const deleteCar = async (id, token) => {
-  const res = await fetch(`${BASE_URL}/${id}`, {
+  const res = await secureFetch(`${BASE_URL}/${id}`, {
     method: 'DELETE',
-    headers: {
-      Authorization: `${token}`,
-    },
   });
   if (!res.ok) throw new Error('Failed to delete car');
   return res.json();
@@ -52,9 +49,7 @@ export const deleteCar = async (id, token) => {
 export const getMyCars = async () => {
   const token = localStorage.getItem('token');
 
-  const res = await fetch(`${BASE_URL}/my-cars`, {
-    headers: { Authorization: `${token}` },
-  });
+  const res = await secureFetch(`${BASE_URL}/my-cars`, {});
 
   if (!res.ok) throw new Error('Failed to fetch your cars');
   return await res.json();

@@ -3,8 +3,9 @@ const BASE_URL = 'http://localhost:3000/api';
 export const loginRequest = async (email, password) => {
   const res = await fetch(`${BASE_URL}/login`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json'},
     body: JSON.stringify({ email, password }),
+    credentials: 'include',
   });
 
   if (!res.ok) {
@@ -15,6 +16,64 @@ export const loginRequest = async (email, password) => {
   
   localStorage.setItem('auth', JSON.stringify({email: data.user.email, role: data.user.role}));
   localStorage.setItem('token', data.token);
+};
+// ============ Refresh logic ============
+
+export const refreshAccessToken = async () => {
+  const res = await fetch(`${BASE_URL}/refresh`, {
+    method: 'POST',
+    credentials: 'include', // ⬅️ sends the cookie
+  });
+
+  if (!res.ok) throw new Error('Failed to refresh token');
+  const data = await res.json();
+  localStorage.setItem('token', data.token);
+  return data.token;
+};
+
+const isTokenExpired = (token) => {
+  try {
+    const [, payloadBase64] = token.split('.');
+    const payload = JSON.parse(atob(payloadBase64));
+    const now = Math.floor(Date.now() / 1000);
+    return payload.exp < now;
+  } catch {
+    return true; // treat malformed token as expired
+  }
+};
+
+export const secureFetch = async (url, options = {}) => {
+  let token = localStorage.getItem('token');
+
+  // Check expiration before sending request
+  if (!token || isTokenExpired(token)) {
+    try {
+      token = await refreshAccessToken();
+      localStorage.setItem('token', token);
+    } catch (err) {
+      throw new Error('Session expired. Please log in again.');
+    }
+  }
+
+  // Attach token to headers
+  options.headers = {
+    ...(options.headers || {}),
+    Authorization: `${token}`,
+    'Content-Type': 'application/json',
+  };
+
+  return fetch(url, options);
+};
+
+//===============================================
+
+export const logoutRequest = async () => {
+  const res = await fetch(`${BASE_URL}/logout`, {
+    method: 'POST',
+    credentials: 'include',
+  });
+
+  if (!res.ok) throw new Error('Logout failed');
 };
 
 export const registerRequest = async (email, password, role = 'user') => {
@@ -35,11 +94,10 @@ export const registerRequest = async (email, password, role = 'user') => {
 export const requestAdmin = async () => {
   const token = localStorage.getItem('token');
 
-  const res = await fetch(`${BASE_URL}/request-admin`, {
+  const res = await secureFetch(`${BASE_URL}/request-admin`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `${token}`,
     },
   });
 
@@ -54,9 +112,7 @@ export const requestAdmin = async () => {
 export const getPendingRequests = async () => {
   const token = localStorage.getItem('token');
 
-  const res = await fetch(`${BASE_URL}/admin/pending`, {
-    headers: { Authorization: `${token}` },
-  });
+  const res = await secureFetch(`${BASE_URL}/admin/pending`, {});
 
   if (!res.ok) throw new Error('Failed to fetch requests');
   return await res.json();
@@ -65,11 +121,10 @@ export const getPendingRequests = async () => {
 export const approveAdmin = async (userId) => {
   const token = localStorage.getItem('token');
 
-  const res = await fetch(`${BASE_URL}/admin/approve/${userId}`, {
+  const res = await secureFetch(`${BASE_URL}/admin/approve/${userId}`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `${token}`,
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({ userId }),
   });

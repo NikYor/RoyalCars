@@ -3,7 +3,7 @@ const BASE_URL = 'https://localhost:3000/api/bookings'; // Replace with your act
 export const getUserBookings = async (token) => {
   const res = await fetch(`${BASE_URL}/my`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `${token}`,
     },
   });
   if (!res.ok) throw new Error('Failed to fetch bookings');
@@ -13,7 +13,7 @@ export const getUserBookings = async (token) => {
 export const getBookingById = async (id, token) => {
   const res = await fetch(`${BASE_URL}/${id}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `${token}`,
     },
   });
   if (!res.ok) throw new Error('Booking not found');
@@ -25,7 +25,7 @@ export const createBooking = async (bookingData, token) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `${token}`,
     },
     body: JSON.stringify(bookingData),
   });
@@ -38,7 +38,7 @@ export const updateBooking = async (id, bookingData, token) => {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `${token}`,
     },
     body: JSON.stringify(bookingData),
   });
@@ -50,7 +50,7 @@ export const deleteBooking = async (id, token) => {
   const res = await fetch(`${BASE_URL}/${id}`, {
     method: 'DELETE',
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `${token}`,
     },
   });
   if (!res.ok) throw new Error('Failed to delete booking');
