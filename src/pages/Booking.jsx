@@ -27,7 +27,7 @@ const Booking = () => {
   };
 
   return (
-    <div className="container-fluid py-5 mt-5 mb-5">
+    <div className="container-fluid py-5" style={{height: '83vh'}}>
       <h2 className="text-center mb-4">Book Car #{id}</h2>
       <form onSubmit={handleSubmit} className="row g-3">
         <div className="col-md-6">

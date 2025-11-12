@@ -31,10 +31,6 @@ const Register = () => {
       <form onSubmit={handleSubmit}>
         <input type="email" className="form-control mb-3" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
         <input type="password" className="form-control mb-3" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        {/* <select value={role} onChange={(e) => setRole(e.target.value)} className="form-control">
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-        </select> */}
         <button type="submit" className="btn btn-primary px-5 mt-3 mx-auto d-block">Register</button>
         {error && <p className="error">{error}</p>}
       </form>

@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 const CarCard = ({ id, image, title, year, transmission, mileage, price }) => {
+  const { user } = useContext(AuthContext);
+  const isLogged = !!user
+
   return (
     <div className="col-lg-4 col-md-6 mb-2">
       <div className="rent-item mb-4">
@@ -20,9 +25,9 @@ const CarCard = ({ id, image, title, year, transmission, mileage, price }) => {
             <span>{mileage}</span>
           </div>
         </div>
-        <Link to={`/booking/${id}`} className="btn btn-primary px-3">
+        {isLogged && <Link to={`/booking/${id}`} className="btn btn-primary px-3">
           ${price}/Day – Book Now
-        </Link>
+        </Link>}
       </div>
     </div>
   );

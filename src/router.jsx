@@ -9,7 +9,8 @@ import Profile from './pages/Profile';
 // import NotFound from './pages/NotFound';
 
 import ManageUsers from './components/ManageUsers';
-import FormInput from './components/FormInput';
+import CreateCarForm from './components/CreateCarForm';
+import EditCarForm from './components/EditCarForm';
 import ManageCars from './components/ManageCars';
 import PrivateRoute from './components/PrivateRoute';
 import GuestRoute from './components/GuestRoute';
@@ -29,7 +30,8 @@ const RouterConfig = () => {
       <Route path="/users/manage" element={<AdminRoute><ManageUsers /></AdminRoute>} />
       <Route path="/catalog" element={<Catalog />} />
       <Route path="/cars/:id" element={<CarDetail />} />
-      <Route path="/cars/create" element={<PrivateRoute><FormInput /></PrivateRoute>} />
+      <Route path="/cars/create" element={<PrivateRoute><CreateCarForm /></PrivateRoute>} />
+      <Route path="/cars/edit/:id" element={<PrivateRoute><EditCarForm /></PrivateRoute>} />
       <Route path="/booking/:id" element={<PrivateRoute><Booking /></PrivateRoute>}/>
 
       {/* <Route path="*" element={<NotFound />} /> */}
