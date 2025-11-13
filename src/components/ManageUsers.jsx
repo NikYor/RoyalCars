@@ -1,28 +1,38 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { AuthContext } from '../context/AuthContext';
 import { getPendingRequests, approveAdmin } from '../services/authService';
+import { setError, setMessage, clearFeedback } from '../store/feedbackSlice';
 
 const ManageUsers = () => {
   const { user, isAdmin } = useContext(AuthContext);
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
   const [requests, setRequests] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isAdmin) {
-      getPendingRequests()
-        .then(data => setRequests(data.users))
-        .catch(err => setError(err.message));
-    }
-  }, [isAdmin]);
+    const fetchRequests = async () => {
+      dispatch(clearFeedback());
+      try {
+        if (isAdmin) {
+          const data = await getPendingRequests();
+          setRequests(data.users);
+        }
+      } catch (err) {
+        dispatch(setError(err.message || 'Failed to load pending requests'));
+      }
+    };
+
+    fetchRequests();
+  }, [isAdmin, dispatch]);
 
   const handleApprove = async (userId) => {
+    dispatch(clearFeedback());
     try {
       const res = await approveAdmin(userId);
-      setMessage(res.message);
+      dispatch(setMessage(res.message || 'User approved successfully'));
       setRequests(prev => prev.filter(u => u._id !== userId));
     } catch (err) {
-      setError(err.message);
+      dispatch(setError(err.message || 'Approval failed'));
     }
   };
 
@@ -35,8 +45,7 @@ const ManageUsers = () => {
   }
 
   return (
-    <>
-      <div className="container py-5" style={{ height: '83vh' }}>
+    <div className="container py-5" style={{ height: '83vh' }}>
       <h4 className="mt-4">Pending Admin Requests</h4>
       {requests.length === 0 ? (
         <p>No pending requests</p>
@@ -53,7 +62,10 @@ const ManageUsers = () => {
               <tr key={user._id}>
                 <td>{user.email}</td>
                 <td>
-                  <button className="btn btn-success btn-sm" onClick={() => handleApprove(user._id)}>
+                  <button
+                    className="btn btn-success btn-sm"
+                    onClick={() => handleApprove(user._id)}
+                  >
                     Approve
                   </button>
                 </td>
@@ -62,12 +74,8 @@ const ManageUsers = () => {
           </tbody>
         </table>
       )}
-      </div>
-
-      {message && <p className="text-success">{message}</p>}
-      {error && <p className="text-danger">{error}</p>}
-    </>
-  )
-}
+    </div>
+  );
+};
 
 export default ManageUsers;

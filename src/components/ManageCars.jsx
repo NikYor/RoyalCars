@@ -1,26 +1,36 @@
 import { useEffect, useState } from 'react';
-import { getMyCars, deleteCar } from '../services/carService';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getMyCars, deleteCar } from '../services/carService';
+import { setMessage, setError, clearFeedback } from '../store/feedbackSlice';
 
 const ManageCars = () => {
   const [cars, setCars] = useState([]);
-  const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getMyCars()
-      .then(data => setCars(data))
-      .catch(err => setError('Failed to load cars'));
-  }, []);
+    const fetchCars = async () => {
+      dispatch(clearFeedback());
+      try {
+        const data = await getMyCars();
+        setCars(data);
+      } catch (err) {
+        dispatch(setError('Failed to fetch cars'));
+      }
+    };
+
+    fetchCars();
+  }, [dispatch]);
 
   const handleDelete = async (id) => {
+    dispatch(clearFeedback());
     try {
       const res = await deleteCar(id);
-      setMessage(res.message);
+      dispatch(setMessage(res.message || 'Car deleted successfully'));
       setCars(prev => prev.filter(car => car._id !== id));
     } catch (err) {
-      setError(err.message);
+      dispatch(setError('Failed to delete car'));
     }
   };
 
@@ -29,10 +39,8 @@ const ManageCars = () => {
   };
 
   return (
-    <div className="container py-5" style={{height: '83vh'}}>
+    <div className="container py-5" style={{ height: '83vh' }}>
       <h2 className="text-center mb-4">Manage Cars</h2>
-      {error && <p className="text-danger">{error}</p>}
-      {message && <p className="text-success">{message}</p>}
       {cars.length === 0 ? (
         <p>No cars found</p>
       ) : (
@@ -56,10 +64,16 @@ const ManageCars = () => {
                 <td>{car.price}</td>
                 <td>{car.status}</td>
                 <td>
-                  <button className="btn btn-warning btn-sm me-2" onClick={() => handleEdit(car._id)}>
+                  <button
+                    className="btn btn-warning btn-sm me-2"
+                    onClick={() => handleEdit(car._id)}
+                  >
                     Edit
                   </button>
-                  <button className="btn btn-danger btn-sm" onClick={() => handleDelete(car._id)}>
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => handleDelete(car._id)}
+                  >
                     Delete
                   </button>
                 </td>

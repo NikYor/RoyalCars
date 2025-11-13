@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { getCarById, updateCar } from '../services/carService';
 import FormInput from './FormInput';
+import { setError, setMessage, clearFeedback } from '../store/feedbackSlice';
 
 const EditCarForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -16,17 +19,21 @@ const EditCarForm = () => {
     lat: '',
     lng: '',
     price: '',
-    status: '',
+    status: 'free',
     image: '',
   });
 
-  const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
-
   useEffect(() => {
     const fetchCar = async () => {
+      dispatch(clearFeedback());
       try {
         const token = localStorage.getItem('token');
+        if (!token) {
+          dispatch(setError('Unauthorized'));
+          navigate('/login');
+          return;
+        }
+
         const car = await getCarById(id, token);
         setFormData({
           name: car.name || '',
@@ -37,15 +44,16 @@ const EditCarForm = () => {
           lat: car.lat?.toString() || '',
           lng: car.lng?.toString() || '',
           price: car.price?.toString() || '',
+          status: car.status || 'free',
           image: car.image || '',
         });
       } catch (err) {
-        setError('Failed to load car data');
+        dispatch(setError('Failed to fetch car'));
       }
     };
 
     fetchCar();
-  }, [id]);
+  }, [id, dispatch, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -54,21 +62,29 @@ const EditCarForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    dispatch(clearFeedback());
+
     try {
       const token = localStorage.getItem('token');
+      if (!token) {
+        dispatch(setError('Unauthorized'));
+        navigate('/login');
+        return;
+      }
+
       const updated = {
         ...formData,
         lat: +formData.lat,
         lng: +formData.lng,
-        status: formData.status || 'free',
         price: +formData.price,
+        status: formData.status || 'free',
       };
+
       const res = await updateCar(id, updated, token);
-      setMessage(res.message || 'Car updated successfully');
+      dispatch(setMessage(res.message || 'Car updated successfully'));
       navigate('/cars/manage');
     } catch (err) {
-      setError(err.message || 'Update failed');
+      dispatch(setError('Failed to update car'));
     }
   };
 
@@ -76,7 +92,11 @@ const EditCarForm = () => {
     <div className="container py-5 w-50">
       <h2 className="text-center mb-4">Edit Car</h2>
       <form onSubmit={handleSubmit}>
-        {['name', 'category', 'info', 'date', 'location', 'lat', 'lng', 'price', 'status', 'image'].map((field) => (
+        {[
+          'name', 'category', 'info', 'date',
+          'location', 'lat', 'lng', 'price',
+          'status', 'image',
+        ].map((field) => (
           <FormInput
             key={field}
             label={field}
@@ -87,8 +107,6 @@ const EditCarForm = () => {
           />
         ))}
         <button type="submit" className="btn btn-primary w-100">Update</button>
-        {message && <p className="text-success mt-3">{message}</p>}
-        {error && <p className="text-danger mt-3">{error}</p>}
       </form>
     </div>
   );

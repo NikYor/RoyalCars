@@ -1,20 +1,24 @@
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 import { useContext } from 'react';
+import { useDispatch } from 'react-redux';
 import { AuthContext } from '../context/AuthContext';
 import { requestAdmin } from '../services/authService';
+import { setMessage, setError, clearFeedback } from '../store/feedbackSlice';
 
 const Profile = () => {
   const { user, isAdmin } = useContext(AuthContext);
+  const dispatch = useDispatch();
 
   const handleRequestAdmin = async () => {
-    setError('');
+    dispatch(clearFeedback());
     try {
       const res = await requestAdmin();
-      setMessage(res.message);
+      dispatch(setMessage(res.message || 'Request sent successfully'));
     } catch (err) {
-      setError(err.message);
+      dispatch(setError(err.message || 'Failed to send request'));
     }
   };
+
   return (
     <div className="container py-5" style={{ height: '83vh' }}>
       <h2 className="text-center mb-4">Welcome, {user.email}</h2>
@@ -22,7 +26,9 @@ const Profile = () => {
       {!isAdmin && (
         <>
           <p>You are a regular user.</p>
-          <button onClick={handleRequestAdmin}>Request Admin</button>
+          <button className="btn btn-outline-secondary" onClick={handleRequestAdmin}>
+            Request Admin
+          </button>
         </>
       )}
 
@@ -30,17 +36,16 @@ const Profile = () => {
         <>
           <p>You are an admin!</p>
           <div className="text-center mb-4 d-flex flex-wrap justify-content-center gap-3">
-            <NavLink to="/cars/create" className="btn btn-outline-primary mr-2">
+            <NavLink to="/cars/create" className="btn btn-outline-primary">
               ➕ Create New Car
             </NavLink>
-            <NavLink to="/cars/manage" className="btn btn-outline-warning mr-2">
+            <NavLink to="/cars/manage" className="btn btn-outline-warning">
               ✏️ Manage Cars
             </NavLink>
             <NavLink to="/users/manage" className="btn btn-outline-info">
               👥 Manage Users
             </NavLink>
           </div>
-
         </>
       )}
     </div>

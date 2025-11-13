@@ -1,30 +1,31 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import CarCard from '../components/CarCard';
 import { getAllCars } from '../services/carService';
+import { setError, clearFeedback } from '../store/feedbackSlice';
 
 const Catalog = () => {
   const [cars, setCars] = useState([]);
-  const [error, setError] = useState('');
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchCars = async () => {
+      dispatch(clearFeedback());
       try {
         const data = await getAllCars();
         setCars(data);
       } catch (err) {
-        setError('Failed to load cars');
-        console.error(err);
+        dispatch(setError('Failed to load cars'));
       }
     };
 
     fetchCars();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="container-fluid py-5">
       <div className="container pt-5 pb-3">
         <h1 className="display-4 text-uppercase text-center mb-5">Car Catalog</h1>
-        {error && <p className="text-danger text-center">{error}</p>}
         <div className="row">
           {cars.map((car, index) => (
             <CarCard
