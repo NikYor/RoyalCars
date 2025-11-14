@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getCarById, updateCar } from '../services/carService';
 import FormInput from './FormInput';
+import LocationPicker from './LocationPicker';
 import { setError, setMessage, clearFeedback } from '../store/feedbackSlice';
 
 const EditCarForm = () => {
@@ -60,6 +61,14 @@ const EditCarForm = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleLocationSelect = ({ lat, lng }) => {
+    setFormData(prev => ({
+      ...prev,
+      lat: lat.toFixed(6),
+      lng: lng.toFixed(6),
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(clearFeedback());
@@ -94,8 +103,7 @@ const EditCarForm = () => {
       <form onSubmit={handleSubmit}>
         {[
           'name', 'category', 'info', 'date',
-          'location', 'lat', 'lng', 'price',
-          'status', 'image',
+          'location', 'status', 'price', 'image',
         ].map((field) => (
           <FormInput
             key={field}
@@ -106,6 +114,37 @@ const EditCarForm = () => {
             required={field !== 'image'}
           />
         ))}
+
+        {/* Read-only lat/lng fields */}
+        <FormInput
+          label="Latitude"
+          name="lat"
+          value={formData.lat}
+          onChange={handleChange}
+          required
+          readOnly
+        />
+        <FormInput
+          label="Longitude"
+          name="lng"
+          value={formData.lng}
+          onChange={handleChange}
+          required
+          readOnly
+        />
+
+        {/* Location Picker */}
+        <div className="mb-4">
+          <label className="form-label">Update Location on Map</label>
+          <LocationPicker
+            onLocationSelect={handleLocationSelect}
+            initialPosition={{
+              lat: parseFloat(formData.lat) || 42.6977,
+              lng: parseFloat(formData.lng) || 23.3219,
+            }}
+          />
+        </div>
+
         <button type="submit" className="btn btn-primary w-100">Update</button>
       </form>
     </div>

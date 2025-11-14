@@ -38,14 +38,13 @@ const isTokenExpired = (token) => {
     const now = Math.floor(Date.now() / 1000);
     return payload.exp < now;
   } catch {
-    return true; // treat malformed token as expired
+    return true;
   }
 };
 
 export const secureFetch = async (url, options = {}) => {
   let token = localStorage.getItem('token');
 
-  // Check expiration before sending request
   if (!token || isTokenExpired(token)) {
     try {
       token = await refreshAccessToken();
@@ -55,7 +54,6 @@ export const secureFetch = async (url, options = {}) => {
     }
   }
 
-  // Attach token to headers
   options.headers = {
     ...(options.headers || {}),
     Authorization: `${token}`,

@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { createCar } from '../services/carService';
 import FormInput from './FormInput';
 import { setError, setMessage, clearFeedback } from '../store/feedbackSlice';
+import LocationPicker from './LocationPicker';
 
 const CreateCarForm = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,14 @@ const CreateCarForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleLocationSelect = ({ lat, lng }) => {
+    setFormData(prev => ({
+      ...prev,
+      lat: lat.toFixed(6),
+      lng: lng.toFixed(6),
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -59,8 +68,7 @@ const CreateCarForm = () => {
       <form onSubmit={handleSubmit}>
         {[
           'name', 'category', 'info', 'date',
-          'location', 'lat', 'lng', 'status',
-          'price', 'image',
+          'location', 'status', 'price', 'image',
         ].map((field) => (
           <FormInput
             key={field}
@@ -71,6 +79,26 @@ const CreateCarForm = () => {
             required={field !== 'image'}
           />
         ))}
+        <FormInput
+          label="Latitude"
+          name="lat"
+          value={formData.lat}
+          onChange={handleChange}
+          required
+          readOnly
+        />
+        <FormInput
+          label="Longitude"
+          name="lng"
+          value={formData.lng}
+          onChange={handleChange}
+          required
+          readOnly
+        />
+        <div className="mb-4">
+          <label className="form-label">Select Location on Map</label>
+          <LocationPicker onLocationSelect={handleLocationSelect} />
+        </div>
         <button type="submit" className="btn btn-primary w-100">Submit</button>
       </form>
     </div>
