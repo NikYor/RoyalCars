@@ -5,12 +5,17 @@ export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null); // could be { email, role, token }
+  const [userId, setUserId] = useState(null);
   const [token, setToken] = useState(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('auth');
     const token = localStorage.getItem('token');
     if (storedUser) {
+      const [, payloadBase64] = token.split('.');
+      const payload = JSON.parse(atob(payloadBase64));
+      const userId = payload.id
+      setUserId(userId);
       setUser(JSON.parse(storedUser));
       setToken(token);
     }
@@ -33,7 +38,7 @@ const AuthProvider = ({ children }) => {
   const isAdmin = user?.role === 'admin';
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, isAdmin, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, userId, token, login, logout, isAdmin, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
