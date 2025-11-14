@@ -30,6 +30,7 @@ const Catalog = () => {
           {cars.map((car, index) => (
             <CarCard
               key={index}
+              id={car._id}
               image={car.image || '/img/default-car.png'}
               title={car.name}
               year={car.date}

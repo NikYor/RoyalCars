@@ -1,15 +1,20 @@
-import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 const Booking = () => {
-  const { id } = useParams();
+  const { id, title } = useParams(); // car ID
+  const { userId } = useContext(AuthContext);
+  
+
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     pickupLocation: '',
     dropLocation: '',
     pickupDate: '',
     pickupTime: '',
-    fullName: '',
-    email: '',
+    fullName: ''
   });
 
   const handleChange = (e) => {
@@ -19,83 +24,65 @@ const Booking = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Booking submitted:', formData);
-    // TODO: Send booking to backend
-    alert('Booking simulated successfully!');
+
+    const token = localStorage.getItem('token');
+    
+    if (!token || !userId) {
+      alert('You must be logged in to book a car.');
+      return;
+    }
+
+    const payload = {
+      ...formData,
+      car: id,
+      user: userId,
+    };
+
+    try {
+      const res = await fetch('http://localhost:3000/api/book', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error('Booking failed');
+
+      const data = await res.json();
+      alert(data.message || 'Booking submitted successfully!');
+      navigate('/catalog');
+    } catch (err) {
+      alert(err.message || 'Something went wrong');
+    }
   };
 
   return (
-    <div className="container-fluid py-5" style={{height: '83vh'}}>
-      <h2 className="text-center mb-4">Book Car #{id}</h2>
+    <div className="container-fluid py-5" style={{ height: '83vh' }}>
+      <h2 className="text-center mb-4">Book Car - {title}</h2>
       <form onSubmit={handleSubmit} className="row g-3">
-        <div className="col-md-6">
-          <label className="form-label">Pickup Location</label>
-          <input
-            type="text"
-            name="pickupLocation"
-            className="form-control"
-            value={formData.pickupLocation}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="col-md-6">
-          <label className="form-label">Drop Location</label>
-          <input
-            type="text"
-            name="dropLocation"
-            className="form-control"
-            value={formData.dropLocation}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="col-md-6">
-          <label className="form-label">Pickup Date</label>
-          <input
-            type="date"
-            name="pickupDate"
-            className="form-control"
-            value={formData.pickupDate}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="col-md-6">
-          <label className="form-label">Pickup Time</label>
-          <input
-            type="time"
-            name="pickupTime"
-            className="form-control"
-            value={formData.pickupTime}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="col-md-6">
-          <label className="form-label">Full Name</label>
-          <input
-            type="text"
-            name="fullName"
-            className="form-control"
-            value={formData.fullName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="col-md-6">
-          <label className="form-label">Email</label>
-          <input
-            type="email"
-            name="email"
-            className="form-control"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        {[
+          { name: 'pickupLocation', label: 'Pickup Location' },
+          { name: 'dropLocation', label: 'Drop Location' },
+          { name: 'pickupDate', label: 'Pickup Date', type: 'date' },
+          { name: 'pickupTime', label: 'Pickup Time', type: 'time' },
+          { name: 'fullName', label: 'Full Name' },
+        ].map(({ name, label, type = 'text' }) => (
+          <div className="col-md-6" key={name}>
+            <label className="form-label">{label}</label>
+            <input
+              type={type}
+              name={name}
+              className="form-control"
+              value={formData[name]}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        ))}
         <div className="col-12 text-center mt-4">
           <button type="submit" className="btn btn-primary px-5">
             Confirm Booking

@@ -32,7 +32,7 @@ const RouterConfig = () => {
       <Route path="/cars/:id" element={<CarDetail />} />
       <Route path="/cars/create" element={<PrivateRoute><CreateCarForm /></PrivateRoute>} />
       <Route path="/cars/edit/:id" element={<PrivateRoute><EditCarForm /></PrivateRoute>} />
-      <Route path="/booking/:id" element={<PrivateRoute><Booking /></PrivateRoute>}/>
+      <Route path="/booking/:id/:title" element={<PrivateRoute><Booking /></PrivateRoute>}/>
 
       {/* <Route path="*" element={<NotFound />} /> */}
     </Routes>
