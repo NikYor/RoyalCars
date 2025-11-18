@@ -4,7 +4,8 @@ import App from './App';
 import AuthProvider from './context/AuthContext';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
-import './assets/css/style.css';
+import './styles/style.css';
+import "leaflet/dist/leaflet.css";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
