@@ -2,7 +2,8 @@ import { useParams, Link } from 'react-router-dom';
 import { getCarById } from '../services/carService';
 import React, { useEffect, useState } from 'react';
 import { socket } from "../utils/socket";
-import { GoogleMap, Marker, Polyline, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, Marker, Polyline } from "@react-google-maps/api";
+import { useSelector } from "react-redux";
 
 const containerStyle = {
   width: "100%",
@@ -16,12 +17,7 @@ const CarDetail = () => {
   const [position, setPosition] = useState({ lat: 42.6977, lng: 23.3219 });
   const [status, setStatus] = useState("scheduled");
   const [route, setRoute] = useState([]);
-
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: 'AIzaSyAvvycz7lLgGajPvMgu37mt9-OgtrC_b_c',
-  });
-
+  const isLoaded = useSelector((state) => state.maps.isLoaded);
   useEffect(() => {
     const fetchCar = async () => {
       try {
@@ -47,7 +43,7 @@ const CarDetail = () => {
         setPosition({ lat: data.lat, lng: data.lng });
         setStatus(data.status);
         setCarStatus(data.carStatus);
-        setRoute((prev) => [...prev, { lat: data.lat, lng: data.lng }]); // добавяме точка към маршрута
+        setRoute((prev) => [...prev, { lat: data.lat, lng: data.lng }]);
       }
     });
 

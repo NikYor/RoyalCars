@@ -1,5 +1,6 @@
-import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, Marker } from '@react-google-maps/api';
 import { useState, useEffect } from 'react';
+import { useSelector } from "react-redux";
 
 const containerStyle = {
   width: '100%',
@@ -24,15 +25,11 @@ let locationCoords = null;
 
 (async () => {
   locationCoords = await getLocation();
-  console.log('Filled via async:', locationCoords); // ✅ now it's usable
 })();
 
 const LocationPicker = ({ onLocationSelect, initialPosition }) => {
   const [marker, setMarker] = useState(null);
-
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: 'AIzaSyAvvycz7lLgGajPvMgu37mt9-OgtrC_b_c',
-  });
+  const isLoaded = useSelector((state) => state.maps.isLoaded);
 
   useEffect(() => {
     if (initialPosition?.lat && initialPosition?.lng) {
