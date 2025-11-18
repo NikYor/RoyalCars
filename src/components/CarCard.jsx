@@ -25,9 +25,14 @@ const CarCard = ({ id, image, title, year, transmission, mileage, price }) => {
             <span>{mileage}</span>
           </div>
         </div>
-        {isLogged && <Link to={`/booking/${id}/${title}`} className="btn btn-primary px-3">
-          ${price}/Day – Book Now
-        </Link>}
+        <div className="d-flex">
+          {isLogged && <Link to={`/booking/${id}/${title}`} className="btn btn-primary px-3 mr-3">
+            ${price}/Day – Book Now
+          </Link>}
+          <Link to={`/cars/${id}`} className="btn btn-primary px-3}">
+            View Details
+          </Link>
+        </div>
       </div>
     </div>
   );
