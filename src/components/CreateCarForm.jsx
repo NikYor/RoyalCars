@@ -12,8 +12,8 @@ const CreateCarForm = () => {
 
   const [formData, setFormData] = useState({
     name: '',
-    category: '',
-    info: '',
+    transmition: '',
+    mileage: '',
     date: '',
     location: '',
     lat: '',
@@ -67,7 +67,7 @@ const CreateCarForm = () => {
       <h2 className="text-center mb-4">Create New Car</h2>
       <form onSubmit={handleSubmit}>
         {[
-          'name', 'category', 'info', 'date',
+          'name', 'transmition', 'mileage', 'date',
           'location', 'status', 'price', 'image',
         ].map((field) => (
           <FormInput
