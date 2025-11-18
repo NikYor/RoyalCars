@@ -23,7 +23,7 @@ const Catalog = () => {
   }, [dispatch]);
 
   return (
-    <div className="container-fluid py-5">
+    <div className="container-fluid py-5" style={{minHeight: '83vh'}}>
       <div className="container pt-5 pb-3">
         <h1 className="display-4 text-uppercase text-center mb-5">Car Catalog</h1>
         <div className="row">

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 const containerStyle = {
   width: '100%',
-  height: '400px',
+  height: '70vh',
 };
 
 function getLocation() {

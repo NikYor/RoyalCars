@@ -35,14 +35,14 @@ const Profile = () => {
       {isAdmin && (
         <>
           <p>You are an admin!</p>
-          <div className="text-center mb-4 d-flex flex-wrap justify-content-center gap-3">
-            <NavLink to="/cars/create" className="btn btn-outline-primary">
+          <div className="text-center mb-4 d-flex flex-wrap justify-content-center">
+            <NavLink to="/cars/create" className="btn btn-outline-primary rounded-pill mr-3">
               ➕ Create New Car
             </NavLink>
-            <NavLink to="/cars/manage" className="btn btn-outline-warning">
+            <NavLink to="/cars/manage" className="btn btn-outline-warning rounded-pill mr-3">
               ✏️ Manage Cars
             </NavLink>
-            <NavLink to="/users/manage" className="btn btn-outline-info">
+            <NavLink to="/users/manage" className="btn btn-outline-info rounded-pill mr-3">
               👥 Manage Users
             </NavLink>
           </div>

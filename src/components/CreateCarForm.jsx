@@ -63,12 +63,12 @@ const CreateCarForm = () => {
   };
 
   return (
-    <div className="container py-5 w-50">
+    <div className="container-fluid" style={{padding: '10px 15px', height: '83vh'}}>
       <h2 className="text-center mb-4">Create New Car</h2>
-      <form onSubmit={handleSubmit}>
+      <div className="mb-4 d-flex">
+        <form onSubmit={handleSubmit} className='w-50 mr-3'>
         {[
-          'name', 'transmition', 'mileage', 'date',
-          'location', 'status', 'price', 'image',
+          'name', 'transmition', 'mileage', 'date', 'price', 'image',
         ].map((field) => (
           <FormInput
             key={field}
@@ -78,29 +78,33 @@ const CreateCarForm = () => {
             onChange={handleChange}
             required={field !== 'image'}
           />
-        ))}
-        <FormInput
-          label="Latitude"
-          name="lat"
-          value={formData.lat}
-          onChange={handleChange}
-          required
-          readOnly
-        />
-        <FormInput
-          label="Longitude"
-          name="lng"
-          value={formData.lng}
-          onChange={handleChange}
-          required
-          readOnly
-        />
-        <div className="mb-4">
-          <label className="form-label">Select Location on Map</label>
-          <LocationPicker onLocationSelect={handleLocationSelect} />
+          ))}
+          <FormInput
+            label="Latitude"
+            name="lat"
+            value={formData.lat}
+            onChange={handleChange}
+            required
+            readOnly
+          />
+          <FormInput
+            label="Longitude"
+            name="lng"
+            value={formData.lng}
+            onChange={handleChange}
+            required
+            readOnly
+          />
+          <div className='justify-content-center d-flex'>
+            <button type="submit" className="btn btn-primary w-50 rounded-pill">Submit</button>
+          </div>
+          </form>
+        <div className='w-50 d-flex flex-column justify-content-center'>
+          <div className="form-label mb-2" >SELECT LOCATION</div>
+          <LocationPicker onLocationSelect={handleLocationSelect}/>
         </div>
-        <button type="submit" className="btn btn-primary w-100">Submit</button>
-      </form>
+      </div>
+      
     </div>
   );
 };

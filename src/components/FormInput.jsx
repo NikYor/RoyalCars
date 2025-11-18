@@ -2,8 +2,8 @@ const FormInput = ({ label, name, value, onChange, required = false }) => {
   const isStatusField = label.toLowerCase() === 'status';
 
   return (
-    <div className="mb-3">
-      <label className="form-label">{label}</label>
+    <div style={{marginBottom: '13px'}}>
+      <label className="form-label">{label.toUpperCase()}</label>
       {isStatusField ? (
         <select
           name={name}
