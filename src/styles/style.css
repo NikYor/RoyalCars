@@ -9,6 +9,12 @@ body {
     --dark: #1C1E32;
 }
 
+Footer {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+}
+
 h1,
 h2,
 .font-weight-bold {
@@ -325,7 +331,7 @@ h6,
 .carousel-container {
   position: relative;
   width: 100%;
-  height: 83vh;
+  /* height: 83vh; */
   overflow: hidden;
 }
 

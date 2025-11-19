@@ -63,12 +63,12 @@ const CreateCarForm = () => {
   };
 
   return (
-    <div className="container-fluid" style={{padding: '10px 15px', height: '83vh'}}>
+    <div className="container-fluid" style={{padding: '10px 15px'}}>
       <h2 className="text-center mb-4">Create New Car</h2>
       <div className="mb-4 d-flex">
         <form onSubmit={handleSubmit} className='w-50 mr-3'>
         {[
-          'name', 'transmition', 'mileage', 'date', 'price', 'image',
+          'name', 'transmission', 'mileage', 'date', 'price', 'image',
         ].map((field) => (
           <FormInput
             key={field}

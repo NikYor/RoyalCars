@@ -38,14 +38,14 @@ const ManageUsers = () => {
 
   if (!user) {
     return (
-      <div className="container py-5" style={{ height: '83vh' }}>
+      <div className="container py-5">
         <h2 className="text-center text-danger">You are not logged in</h2>
       </div>
     );
   }
 
   return (
-    <div className="container py-5" style={{ height: '83vh' }}>
+    <div className="container py-5">
       <h4 className="mt-4">Pending Admin Requests</h4>
       {requests.length === 0 ? (
         <p>No pending requests</p>

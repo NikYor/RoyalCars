@@ -39,7 +39,7 @@ const ManageCars = () => {
   };
 
   return (
-    <div className="container py-5" style={{ height: '83vh' }}>
+    <div className="container py-5">
       <h2 className="text-center mb-4">Manage Cars</h2>
       {cars.length === 0 ? (
         <p>No cars found</p>

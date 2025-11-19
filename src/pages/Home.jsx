@@ -1,63 +1,3 @@
-// import { useState, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
-// import { setError, clearFeedback } from '../store/feedbackSlice';
-// import { getAllCars } from '../services/carService';
-
-// const Home = () => {
-//   const [index, setIndex] = useState(0);
-//   const [slides, setSlides] = useState([]);
-//   const navigate = useNavigate();
-//   const dispatch = useDispatch();
-//   let data;
-
-//   useEffect(() => {
-//     async function fetchCars() {
-//       dispatch(clearFeedback());
-//       try {
-//         data = await getAllCars()
-//         setSlides(data);
-//         console.log('Data -> : ', data);
-//       } catch (error) {
-//         dispatch(setError(error.message));
-//       }
-//     };
-//     fetchCars();
-  
-//   }, []);
-
-//   const nextSlide = () => setIndex((index + 1) % slides.length);
-//   const prevSlide = () => setIndex((index - 1 + slides.length) % slides.length);
-
-//   const book = () => {
-//     navigate('/booking/' + slides[index].id);
-//   }
-
-//   useEffect(() => {
-//     const interval = setInterval(nextSlide, 2000); // 2 seconds
-//     return () => clearInterval(interval); // cleanup
-//   }, [index]);
-
-//   return (
-//     <>
-//       {slides.length > 0 && (<div className="carousel-container">
-//         <div className="carousel-slide">
-//           <img src={slides[index].image} alt={`Slide ${index + 1}`} />
-//           <div className="carousel-caption">
-//             <h4>Rent A Car</h4>
-//             <h1>{slides[index].name}</h1>
-//             <button className="reserve-btn" onClick={book}>Reserve Now</button>
-//           </div>
-//         </div>
-//         <button className="carousel-control prev" onClick={prevSlide}>‹</button>
-//         <button className="carousel-control next" onClick={nextSlide}>›</button>
-//       </div>)}
-//     </>
-//   );
-// };
-
-// export default Home;
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -67,7 +7,7 @@ import { getAllCars } from '../services/carService';
 const Home = () => {
   const [index, setIndex] = useState(0);
   const [slides, setSlides] = useState([]);
-  const [loading, setLoading] = useState(true); // NEW
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -77,7 +17,7 @@ const Home = () => {
       try {
         const data = await getAllCars();
         setSlides(data);
-        setLoading(false); // stop loading once data arrives
+        setLoading(false);
       } catch (error) {
         dispatch(setError(error.message));
         setLoading(false);
@@ -103,7 +43,7 @@ const Home = () => {
 
   return (
     <>
-      {loading && <p>Loading cars...</p>}  {/* Show while fetching */}
+      {loading && <p>Loading cars...</p>}
 
       {!loading && slides.length > 0 && (
         <div className="carousel-container">
@@ -120,7 +60,7 @@ const Home = () => {
         </div>
       )}
 
-      {!loading && slides.length === 0 && <p>No cars available.</p>} {/* fallback */}
+      {!loading && slides.length === 0 && <p>No cars available.</p>}
     </>
   );
 };

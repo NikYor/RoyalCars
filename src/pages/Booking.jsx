@@ -3,7 +3,7 @@ import { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
 const Booking = () => {
-  const { id, title } = useParams(); // car ID
+  const { id, title } = useParams();
   const { userId } = useContext(AuthContext);
   
 
@@ -61,7 +61,7 @@ const Booking = () => {
   };
 
   return (
-    <div className="container-fluid py-5" style={{ height: '83vh' }}>
+    <div className="container-fluid py-5">
       <h2 className="text-center mb-4">Book Car - {title}</h2>
       <form onSubmit={handleSubmit} className="row g-3">
         {[
