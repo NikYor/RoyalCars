@@ -6,6 +6,7 @@ import Booking from './pages/Booking';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import About from './pages/About';
 // import NotFound from './pages/NotFound';
 
 import ManageUsers from './components/ManageUsers';
@@ -30,6 +31,7 @@ const RouterConfig = () => {
       <Route path="/users/manage" element={<AdminRoute><ManageUsers /></AdminRoute>} />
       <Route path="/catalog" element={<Catalog />} />
       <Route path="/cars/:id" element={<CarDetail />} />
+      <Route path="/about" element={<About />} />
       <Route path="/cars/create" element={<PrivateRoute><CreateCarForm /></PrivateRoute>} />
       <Route path="/cars/edit/:id" element={<PrivateRoute><EditCarForm /></PrivateRoute>} />
       <Route path="/booking/:id/:title" element={<PrivateRoute><Booking /></PrivateRoute>}/>
