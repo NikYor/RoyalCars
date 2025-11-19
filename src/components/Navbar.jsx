@@ -40,7 +40,6 @@ const Navbar = () => {
                 </div>
               </div>
               
-              <NavLink to="/contact" className="nav-item nav-link">Contact</NavLink>
               <NavLink to="/about" className="nav-item nav-link">About</NavLink>
 
               {isAuthenticated ? (

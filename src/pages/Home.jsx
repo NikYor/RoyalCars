@@ -48,7 +48,7 @@ const Home = () => {
       {!loading && slides.length > 0 && (
         <div className="carousel-container">
           <div className="carousel-slide">
-            <img src={slides[index]?.image} alt={`Slide ${index + 1}`} style={{maxHeight: '83vh', padding: '2vh 0 0'}}/>
+            <img src={slides[index]?.image} alt={`Slide ${index + 1}`} style={{maxHeight: '83vh', padding: '2vh 0'}}/>
             <div className="carousel-caption mt-4">
               <h4 className='text-white'>Rent A Car</h4>
               <h1 className="text-uppercase text-white mb-4">{slides[index]?.name}</h1>

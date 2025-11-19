@@ -2,6 +2,7 @@
 body {
     overflow-y: hidden;
 }
+
 :root {
     --primary: #F77D0A;
     --secondary: #2B2E4A;
@@ -100,7 +101,7 @@ h6,
 }
 
 @media (max-width: 991.98px) {
-    .navbar-dark .navbar-nav .nav-link  {
+    .navbar-dark .navbar-nav .nav-link {
         padding: 10px 15px;
     }
 }
@@ -174,6 +175,7 @@ h6,
     text-align: center;
     background: var(--light);
     transition: .5s;
+    height: 100%
 }
 
 .rent-item:hover,
@@ -329,57 +331,53 @@ h6,
 
 /* ====================================== */
 .carousel-container {
-  position: relative;
-  width: 100%;
-  /* height: 83vh; */
-  overflow: hidden;
+    position: relative;
+    width: 100%;
+    /* height: 83vh; */
+    overflow: hidden;
 }
 
 .carousel-slide img {
-  width: 100%;
-  height: 50%;
-  object-fit: scale-down;
+    width: 100%;
+    height: 50%;
+    object-fit: scale-down;
 }
 
 .carousel-caption {
-  position: absolute;
-  bottom: 0%;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  color: white;
+    position: absolute;
+    bottom: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
 }
 
 .reserve-btn {
-  padding: 1rem 2rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
+    padding: 1rem 2rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
 .carousel-control {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 3rem;
-  color: white;
-  background: rgba(0,0,0,0.3);
-  border: none;
-  cursor: pointer;
-  z-index: 10;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 3rem;
+    color: white;
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    cursor: pointer;
+    z-index: 10;
 }
 
 .carousel-control.prev {
-  left: 10px;
+    left: 10px;
 }
 
 .carousel-control.next {
-  right: 10px;
-}
-
-.img-fluid {
-    max-height: 17vh;
+    right: 10px;
 }
 
 .error-message {
@@ -410,6 +408,7 @@ h6,
     from {
         clip-path: inset(0 0 0 0);
     }
+
     to {
         clip-path: inset(0 100% 0 0);
     }
@@ -422,17 +421,25 @@ h6,
 /* ===== */
 
 @keyframes diamond-out-hesitate {
-  0% {
-    clip-path: polygon(-50% 50%, 50% -50%, 150% 50%, 50% 150%);
-  }
-  50% {
-    clip-path: polygon(45% 50%, 50% 25%, 55% 50%, 50% 75%);
-  }
-  100% {
-    clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
-  }
+    0% {
+        clip-path: polygon(-50% 50%, 50% -50%, 150% 50%, 50% 150%);
+    }
+
+    50% {
+        clip-path: polygon(45% 50%, 50% 25%, 55% 50%, 50% 75%);
+    }
+
+    100% {
+        clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+    }
 }
 
 [transition-style="out:diamond:hesitate"] {
-  animation: 1.5s cubic-bezier(.25, 1, .30, 1) diamond-out-hesitate both;
+    animation: 1.5s cubic-bezier(.25, 1, .30, 1) diamond-out-hesitate both;
+}
+
+.responsive-img {
+    width: 100%;
+    height: 17vh;
+    object-fit: scale-down;
 }
