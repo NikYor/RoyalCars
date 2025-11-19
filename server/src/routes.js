@@ -2,9 +2,11 @@ import { Router } from 'express';
 import authRouter from './routes/authRoutes.js';
 import carRouter from './routes/carRoutes.js';
 import bookingRouter from './routes/bookingRouter.js';
+// import aliveRouter from './routes/aliveRoutes.js';
 
 const router = Router();
 
+// router.use('', aliveRouter);
 router.use('', authRouter);
 router.use('', carRouter);
 router.use('', bookingRouter);
