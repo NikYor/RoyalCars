@@ -1,0 +1,163 @@
+{
+  "server": {
+    "port": 3000
+  },
+  "database": {
+    "host": "127.0.0.1",
+    "port": 27017,
+    "name": "cars-app"
+  },
+  "app_cookie_name": "token",
+  "jwt_secret": "239829831110013e77dxhn9999927",
+  "model": {
+    "cars": {
+      "name": {
+        "type": "String",
+        "required": true
+      },
+      "transmission": {
+        "type": "String",
+        "required": true
+      },
+      "mileage": {
+        "type": "Number",
+        "required": true
+      },
+      "date": {
+        "type": "String",
+        "required": true
+      },
+      "lat": {
+        "type": "Number",
+        "required": true
+      },
+      "lng": {
+        "type": "Number",
+        "required": true
+      },
+      "price": {
+        "type": "Number",
+        "required": true
+      },
+      "image": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String",
+        "enum": [
+          "in use",
+          "free"
+        ],
+        "default": "free"
+      },
+      "createdBy": {
+        "type": "String",
+        "ref": "User"
+      },
+      "registeredUsers": {
+        "type": "ObjectId",
+        "ref": "User"
+      }
+    },
+    "booking": {
+      "car": {
+        "type": "ObjectId",
+        "ref": "Cars"
+      },
+      "userId": {
+        "type": "ObjectId",
+        "ref": "User"
+      },
+      "pickupLocation": {
+        "type": "String",
+        "required": true
+      },
+      "dropLocation": {
+        "type": "String",
+        "required": true
+      },
+      "pickupDate": {
+        "type": "String",
+        "required": true
+      },
+      "pickupTime": {
+        "type": "String",
+        "required": true
+      },
+      "fullName": {
+        "type": "String",
+        "required": true
+      },
+      "email": {
+        "type": "String",
+        "required": true
+      },
+      "encodedPolyline": {
+        "type": "String"
+      },
+      "distanceMeters": {
+        "type": "Number",
+        "default": 0
+      },
+      "duration": {
+        "type": "String",
+        "default": 0
+      },
+      "currentIndex": {
+        "type": "Number",
+        "default": 0
+      },
+      "status": {
+        "type": "String",
+        "enum": [
+          "scheduled",
+          "inTransit",
+          "completed"
+        ],
+        "default": "scheduled"
+      }
+    },
+    "user": {
+      "email": {
+        "type": "String",
+        "required": true,
+        "unique": true,
+        "lowercase": true,
+        "trim": true
+      },
+      "password": {
+        "type": "String",
+        "required": true
+      },
+      "role": {
+        "type": "String",
+        "enum": [
+          "user",
+          "admin"
+        ],
+        "default": "user"
+      },
+      "isTemporary": {
+        "type": "Boolean",
+        "default": false
+      },
+      "pendingAdminRequest": {
+        "type": "Boolean",
+        "default": false
+      },
+      "requestedAdminAt": {
+        "type": "Date",
+        "default": null
+      },
+      "approvedBy": {
+        "type": "Array<String>",
+        "ref": "User",
+        "default": null
+      },
+      "approvedAt": {
+        "type": "Date",
+        "default": null
+      }
+    }
+  }
+}
