@@ -57,6 +57,10 @@
       "registeredUsers": {
         "type": "ObjectId",
         "ref": "User"
+      },
+      "company": {
+        "type": "ObjectId",
+        "ref": "Company"
       }
     },
     "booking": {
@@ -137,6 +141,11 @@
         ],
         "default": "user"
       },
+      "company": {
+        "type": "ObjectId",
+        "ref": "Company",
+        "default": null
+      },
       "isTemporary": {
         "type": "Boolean",
         "default": false
@@ -157,6 +166,12 @@
       "approvedAt": {
         "type": "Date",
         "default": null
+      }
+    },
+    "company": {
+      "name": {
+        "type": "String",
+        "unique": true
       }
     }
   }

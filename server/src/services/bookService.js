@@ -14,3 +14,31 @@ export async function bookCreate(req, res) {
     res.status(400).json({ message: 'Error creating booking', error: err.message });
   }
 }
+
+export async function bookList(req, res) {
+  try {
+    const grouped = await Booking.aggregate([
+      {
+        $group: {
+          _id: "$car",
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $lookup: {
+          from: "cars",
+          localField: "_id",
+          foreignField: "_id",
+          as: "car"
+        }
+      },
+      { $unwind: "$car" },
+      { $sort: { count: -1 } }
+    ]);
+
+    res.json(grouped);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching grouped bookings", error: err.message });
+  }
+};
+

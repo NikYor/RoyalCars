@@ -1,7 +1,7 @@
 import { schedule } from 'node-cron';
 import axios from 'axios';
 import pkg from '@mapbox/polyline';
-import { Booking, Item } from '../models/index.js';
+import { Booking, Item, User } from '../models/index.js';
 import { io } from '../index.js';
 
 const { decode } = pkg
@@ -74,13 +74,17 @@ schedule('* * * * *', async () => {
 schedule('*/1 * * * * *', async () => {
   const bookings = await Booking.find({ status: 'inTransit' });
 
+  const countAdminRequest = await User.countDocuments({ pendingAdminRequest: true });
+  io.emit("pendingAdminCountUpdated", { countAdminRequest });
+
+
   for (const booking of bookings) {
     const decodedRoute = decode(booking.encodedPolyline).map(([lat, lng]) => ({ lat, lng }));
 
     if (booking.currentIndex >= decodedRoute.length) {
       booking.status = 'completed';
       const car = await Item.findById(booking.car);
-      car.mileage += Number(booking.distanceMeters);
+      car.mileage += Number((booking.distanceMeters / 1000).toFixed(1)) ;
       car.status = 'free';
       await car.save();
       await booking.save();

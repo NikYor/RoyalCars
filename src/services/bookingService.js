@@ -1,4 +1,4 @@
-const BASE_URL = 'https://localhost:3000/api/bookings'; // Replace with your actual backend URL
+const BASE_URL = 'http://localhost:3000/api/booking'; // Replace with your actual backend URL
 
 export const getUserBookings = async (token) => {
   const res = await fetch(`${BASE_URL}/my`, {
@@ -21,7 +21,7 @@ export const getBookingById = async (id, token) => {
 };
 
 export const createBooking = async (bookingData, token) => {
-  const res = await fetch(BASE_URL, {
+  const res = await fetch(`${BASE_URL}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -54,5 +54,15 @@ export const deleteBooking = async (id, token) => {
     },
   });
   if (!res.ok) throw new Error('Failed to delete booking');
+  return res.json();
+};
+
+export const bookingList = async (token) => {
+  const res = await fetch(`${BASE_URL}/grouped`, {
+    headers: {
+      Authorization: `${token}`,
+    },
+  });
+  if (!res.ok) throw new Error('Failed to fetch bookings');
   return res.json();
 };

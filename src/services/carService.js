@@ -14,7 +14,7 @@ export const getCarById = async (id) => {
   return res.json();
 };
 
-export const createCar = async (carData, token) => {
+export const createCar = async (carData) => {
   const res = await secureFetch(BASE_URL, {
     method: 'POST',
     headers: {
@@ -26,7 +26,7 @@ export const createCar = async (carData, token) => {
   return res.json();
 };
 
-export const updateCar = async (id, carData, token) => {
+export const updateCar = async (id, carData) => {
   const res = await secureFetch(`${BASE_URL}/${id}`, {
     method: 'PUT',
     headers: {
@@ -38,7 +38,7 @@ export const updateCar = async (id, carData, token) => {
   return res.json();
 };
 
-export const deleteCar = async (id, token) => {
+export const deleteCar = async (id) => {
   const res = await secureFetch(`${BASE_URL}/${id}`, {
     method: 'DELETE',
   });

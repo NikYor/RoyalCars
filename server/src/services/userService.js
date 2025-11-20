@@ -1,6 +1,6 @@
 import { hash } from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { User } from '../models/index.js';
+import { User, Company } from '../models/index.js';
 import { loadConfig } from "../config/configLoader.js"
 import bcrypt from 'bcrypt';
 
@@ -114,12 +114,26 @@ export async function requestAdmin(req, res) {
       return res.status(400).json({ message: 'Вече имате заявка за админ!' });
     }
 
-    // TODO: реална проверка за плащане
+    const { company } = req.body;
+    if (!company) {
+      return res.status(400).json({ message: 'Company is required' });
+    }
+
     user.pendingAdminRequest = true;
     user.requestedAdminAt = new Date();
+    
+    let existingCompany = await Company.findOne({ name: company });
+    
+    if (!existingCompany) {
+      existingCompany = new Company({ name: company });
+      await existingCompany.save();
+    }
+    
+    user.company = existingCompany._id;
     await user.save();
 
     res.json({ message: 'Заявката за админ е подадена' });
+
   } catch (err) {
     res.status(500).json({ message: 'Грешка при заявка', error: err.message });
   }

@@ -89,14 +89,13 @@ export const registerRequest = async (email, password, role = 'user') => {
   return await res.json();
 };
 
-export const requestAdmin = async () => {
-  const token = localStorage.getItem('token');
-
+export const requestAdmin = async (company) => {
   const res = await secureFetch(`${BASE_URL}/request-admin`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
+    body: JSON.stringify({ company }),
   });
 
   if (!res.ok) {
@@ -108,8 +107,6 @@ export const requestAdmin = async () => {
 };
 
 export const getPendingRequests = async () => {
-  const token = localStorage.getItem('token');
-
   const res = await secureFetch(`${BASE_URL}/admin/pending`, {});
 
   if (!res.ok) throw new Error('Failed to fetch requests');
@@ -117,8 +114,6 @@ export const getPendingRequests = async () => {
 };
 
 export const approveAdmin = async (userId) => {
-  const token = localStorage.getItem('token');
-
   const res = await secureFetch(`${BASE_URL}/admin/approve/${userId}`, {
     method: 'POST',
     headers: {

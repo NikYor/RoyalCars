@@ -6,7 +6,9 @@ import FeedbackOverlay from './components/FeedbackOverlay';
 import { useJsApiLoader } from "@react-google-maps/api";
 import { useDispatch } from "react-redux";
 import { setLoaded } from "./store/mapsSlice";
+import { setActionCount } from "./store/feedbackSlice";
 import { useEffect } from 'react';
+import { socket } from './utils/socket';
 
 const libraries = ["marker"];
 
@@ -21,6 +23,16 @@ function App() {
 
   useEffect(() => {
     dispatch(setLoaded(isLoaded));
+
+    socket.on("pendingAdminCountUpdated", (data) => {      
+      if (data?.countAdminRequest !== undefined) {
+        dispatch(setActionCount(data.countAdminRequest));
+      }
+    });
+
+    return () => {
+      socket.off("pendingAdminCountUpdated");
+    };
   }, [isLoaded, dispatch]);
 
   return (

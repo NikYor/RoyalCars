@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
 const Navbar = () => {
-  const { isAuthenticated, logout } = useContext(AuthContext);
+  const { isAuthenticated, logout, isAdmin } = useContext(AuthContext);
 
   return (
     <div className="container-fluid position-relative nav-bar p-0">
@@ -24,18 +24,22 @@ const Navbar = () => {
             <div className="navbar-nav ml-auto py-0">
               <NavLink to="/" className="nav-item nav-link">Home</NavLink>
 
+              {isAdmin ? (
               <div className="nav-item dropdown">
                 <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Cars</a>
                 <div className="dropdown-menu rounded-0 m-0">
                   <NavLink to="/catalog" className="dropdown-item">Catalog</NavLink>
-                  <NavLink to="/booking/1" className="dropdown-item">Bookings</NavLink>
+                  <NavLink to="/bookings" className="dropdown-item">Bookings</NavLink>
                 </div>
               </div>
+              ): (
+                  <NavLink to="/catalog" className="nav-item nav-link">Catalog</NavLink>
+              )}
 
               <div className="nav-item dropdown">
                 <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                 <div className="dropdown-menu rounded-0 m-0">
-                  <NavLink to="/team" className="dropdown-item">Companies</NavLink>
+                  <NavLink to="/companies" className="dropdown-item">Companies</NavLink>
                   <NavLink to="/testimonials" className="dropdown-item">Testimonial</NavLink>
                 </div>
               </div>

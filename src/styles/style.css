@@ -443,3 +443,14 @@ h6,
     height: 17vh;
     object-fit: scale-down;
 }
+
+.notification-pill {
+    border: #ee5844 solid 1px;
+    border-radius: 90px;
+    width: max-content;
+    padding: 0 9px;
+    color: white;
+    background-color: #ee5844;
+    position: absolute;
+    transform: translate(-20%, -90%);
+}

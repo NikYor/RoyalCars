@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { bookCreate } from '../services/bookService.js'
+import { bookCreate, bookList } from '../services/bookService.js'
 
 const bookingRouter = Router();
 
-bookingRouter.post('/book', bookCreate);
-
-
+bookingRouter.post('/booking', bookCreate);
+bookingRouter.get("/booking/grouped", bookList)
+ 
 export default bookingRouter;

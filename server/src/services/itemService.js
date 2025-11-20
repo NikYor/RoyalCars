@@ -1,14 +1,14 @@
-import { Item } from '../models/index.js';
+import { Item, User } from '../models/index.js';
 
 export async function getAllCars(req, res) {
-  const events = await Item.find().populate('createdBy', 'email').populate('registeredUsers', 'email');
-  res.json(events);
+  const items = await Item.find().populate('createdBy', 'email').populate('registeredUsers', 'email');
+  res.json(items);
 }
 
 export async function getCarById(req, res) {
-  const event = await Item.findById(req.params.id).populate('createdBy', 'email').populate('registeredUsers', 'email');
-  if (!event) return res.status(404).json({ message: 'Събитието не е намерено' });
-  res.json(event);
+  const item = await Item.findById(req.params.id).populate('createdBy', 'email').populate('registeredUsers', 'email');
+  if (!item) return res.status(404).json({ message: 'Error fetching uour car' });
+  res.json(item);
 }
 
 export async function getAllCarsByOwner(req, res) {
@@ -24,9 +24,12 @@ export async function getAllCarsByOwner(req, res) {
 
 export async function createCar(req, res) {
   try {
-    const event = new Item({ ...req.body, createdBy: req.user.id });
-    await event.save();
-    res.status(201).json(event);
+    const user = await User.findById(req.user.id);
+
+    const item = new Item({ ...req.body, createdBy: user._id, company: user.company?._id });
+
+    await item.save();
+    res.status(201).json(item);
   } catch (err) {
     res.status(400).json({ message: 'Грешка при създаване', error: err.message });
   }
@@ -34,29 +37,29 @@ export async function createCar(req, res) {
 
 export async function updateCar(req, res) {
   try {
-    const event = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!event) return res.status(404).json({ message: 'Събитието не е намерено' });
-    res.json(event);
+    const item = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!item) return res.status(404).json({ message: 'Събитието не е намерено' });
+    res.json(item);
   } catch (err) {
     res.status(400).json({ message: 'Грешка при редакция', error: err.message });
   }
 }
 
 export async function deleteCar(req, res) {
-  const event = await Item.findByIdAndDelete(req.params.id);
-  if (!event) return res.status(404).json({ message: 'Събитието не е намерено' });
+  const item = await Item.findByIdAndDelete(req.params.id);
+  if (!item) return res.status(404).json({ message: 'Събитието не е намерено' });
   res.json({ message: 'Събитието е изтрито' });
 }
 
 export async function registerUser(req, res) {
-  const event = await Item.findById(req.params.id);
-  if (!event) return res.status(404).json({ message: 'Събитието не е намерено' });
+  const item = await Item.findById(req.params.id);
+  if (!item) return res.status(404).json({ message: 'Събитието не е намерено' });
 
-  if (event.registeredUsers.includes(req.userId)) {
+  if (item.registeredUsers.includes(req.userId)) {
     return res.status(400).json({ message: 'Вече сте записан' });
   }
 
-  event.registeredUsers.push(req.userId);
-  await event.save();
-  res.json({ message: 'Успешно записан', event });
+  item.registeredUsers.push(req.userId);
+  await item.save();
+  res.json({ message: 'Успешно записан', item });
 }

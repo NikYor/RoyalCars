@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { createBooking } from '../services/bookingService';
 
 const Booking = () => {
   const { id, title } = useParams();
@@ -41,18 +42,9 @@ const Booking = () => {
     };
 
     try {
-      const res = await fetch('http://localhost:3000/api/book', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `${token}`,
-        },
-        body: JSON.stringify(payload),
-      });
+      const res = await createBooking(payload, token);
 
-      if (!res.ok) throw new Error('Booking failed');
-
-      const data = await res.json();
+      const data = res;
       alert(data.message || 'Booking submitted successfully!');
       navigate('/catalog');
     } catch (err) {

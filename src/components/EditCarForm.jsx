@@ -98,7 +98,7 @@ const EditCarForm = () => {
   };
 
   return (
-    <div className="container py-5 w-50">
+    <div className="container py-5 w-50" style={{overflowY: 'auto'}}>
       <h2 className="text-center mb-4">Edit Car</h2>
       <form onSubmit={handleSubmit}>
         {[

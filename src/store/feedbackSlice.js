@@ -5,6 +5,7 @@ const feedbackSlice = createSlice({
   initialState: {
     error: '',
     message: '',
+    actionCount: 0,
   },
   reducers: {
     setError: (state, action) => {
@@ -19,8 +20,11 @@ const feedbackSlice = createSlice({
       state.error = '';
       state.message = '';
     },
+    setActionCount: (state, action) => {
+      state.actionCount = action.payload;
+    },
   },
 });
 
-export const { setError, setMessage, clearFeedback } = feedbackSlice.actions;
+export const { setError, setMessage, clearFeedback, setActionCount } = feedbackSlice.actions;
 export default feedbackSlice.reducer;
