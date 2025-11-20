@@ -11,9 +11,10 @@ import Booking from './pages/Booking';
 import Unauthorized from './pages/Unauthorized';
 import ManageUsers from './pages/ManageUsers';
 import ManageCars from './pages/ManageCars';
-
-import CreateCarForm from './pages/CreateCarForm';
+import Companies from './pages/Companies';
 import EditCarForm from './pages/EditCarForm';
+import CreateCarForm from './pages/CreateCarForm';
+
 import PrivateRoute from './components/PrivateRoute';
 import GuestRoute from './components/GuestRoute';
 import AdminRoute from './components/AdminRoute';
@@ -26,6 +27,7 @@ const RouterConfig = () => {
       <Route path="/booking/:id/:title" element={<PrivateRoute><Booking /></PrivateRoute>}/>
       <Route path="/cars/:id" element={<CarDetail />} />
       <Route path="/catalog" element={<Catalog />} />
+      <Route path="/companies" element={<Companies />} />
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<GuestRoute><Login /></GuestRoute>}/>
       <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>}/>

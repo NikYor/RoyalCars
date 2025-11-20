@@ -2,14 +2,14 @@ import { Router } from 'express';
 import authRouter from './routes/authRoutes.js';
 import carRouter from './routes/carRoutes.js';
 import bookingRouter from './routes/bookingRouter.js';
-// import aliveRouter from './routes/aliveRoutes.js';
+import companiesRouter from './routes/companiesRoutes.js';
 
 const router = Router();
 
-// router.use('', aliveRouter);
 router.use('', authRouter);
 router.use('', carRouter);
 router.use('', bookingRouter);
+router.use('', companiesRouter);
 
 console.log('Registered routes: ')
 router.stack.forEach((r, i) => {
@@ -19,6 +19,8 @@ router.stack.forEach((r, i) => {
     case 1: console.log('\t\t  ', 'Car: ')
       break;
     case 2: console.log('\t\t  ', 'Booking: ')
+      break;
+    case 3: console.log('\t\t  ', 'Company: ')
       break;  
     default:
       break;
