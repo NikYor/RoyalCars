@@ -9,7 +9,7 @@ const About = () => {
           <img
             src="/about.jpg"
             alt="About Royal Car"
-            className="img-fluid rounded shadow"
+            className="img-fluid rounded-lg shadow-mid"
             style={{ objectFit: "cover", width: "100%", height: "100%" }}
           />
         </div>

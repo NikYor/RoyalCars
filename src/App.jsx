@@ -1,4 +1,3 @@
-import { BrowserRouter as Router } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import RouterConfig from './router';
@@ -9,11 +8,14 @@ import { setLoaded } from "./store/mapsSlice";
 import { setActionCount } from "./store/feedbackSlice";
 import { useEffect } from 'react';
 import { socket } from './utils/socket';
+import { useLocation } from "react-router-dom";
+
 
 const libraries = ["marker"];
 
 function App() {
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -37,14 +39,12 @@ function App() {
 
   return (
     <>
-      <Router>
-        <Navbar />
-        <main className="container-fluid px-0" >
-          <FeedbackOverlay />
-          <RouterConfig />
-        </main>
-        <Footer />
-      </Router>
+      <Navbar />
+      <main className="container-fluid px-0" style={location.pathname === '/about' ? {backgroundImage: 'none'}: {}}>
+        <FeedbackOverlay />
+        <RouterConfig />
+      </main>
+      <Footer />
     </>
   );
 }

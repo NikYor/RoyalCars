@@ -77,7 +77,6 @@ const Profile = () => {
       {isAdmin && (
         <>
           <p>You are an admin!</p>
-          {/* admin actions */}
           <div className="text-center mb-4 d-flex flex-wrap justify-content-center">
             <NavLink to="/cars/create" className="btn btn-outline-primary rounded-pill mr-3">
               ➕ Create New Car

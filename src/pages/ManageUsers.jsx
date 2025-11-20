@@ -47,7 +47,7 @@ const ManageUsers = () => {
 
   return (
     <div className="container py-5">
-      <h4 className="mt-4">Pending Admin Requests</h4>
+      <h4 className="my-4">Pending Admin Requests</h4>
       {requests.length === 0 ? (
         <p>No pending requests</p>
       ) : (
@@ -64,7 +64,7 @@ const ManageUsers = () => {
                 <td>{user.email}</td>
                 <td>
                   <button
-                    className="btn btn-success btn-sm position-relative"
+                    className="btn btn-success btn-sm position-relative rounded-pill shadow-light"
                     onClick={() => handleApprove(user._id)}
                   >
                     Approve
