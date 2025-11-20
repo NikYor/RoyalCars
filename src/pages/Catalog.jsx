@@ -24,9 +24,9 @@ const Catalog = () => {
 
   return (
     <div className="container-fluid py-5 px-0">
-      <div className="container pt-5 pb-3">
+      <div className="p-5 pb-3 catalog-scroll">
         <h1 className="display-4 text-uppercase text-center mb-5">Car Catalog</h1>
-        <div className="row">
+        <div className="row ">
           {cars.map((car, index) => (
             <CarCard
               key={index}

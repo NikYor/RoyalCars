@@ -7,7 +7,7 @@ const CarCard = ({ id, image, title, year, transmission, mileage, price }) => {
   const isLogged = !!user
 
   return (
-    <div className="col-lg-4 col-md-6 mb-2">
+    <div className="col-lg-4 col-md-6 mb-5">
       <div className="rent-item mb-4 rounded-lg">
         <img className="mb-4 responsive-img" src={image} alt={title} />
         <div>

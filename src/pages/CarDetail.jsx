@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 const containerStyle = {
   width: "100%",
   height: "73vh",
+  boxShadow: "1px 2px 18px 0px rgba(0,0,0,0.63)"
 };
 
 const CarDetail = () => {
@@ -136,7 +137,7 @@ const CarDetail = () => {
     <div className="containe py-5 px-5">
       <div className="row" style={{ marginTop: '1,5em' }}>
         <div className="col-md-4">
-          <img src={car.image} alt={car.title} className="img-fluid rounded" />
+          <img src={car.image} alt={car.title} className="responsive-img" />
           <div className="mt-5">
             <h2 className="text-uppercase">{car.name}</h2>
             <p className="text-muted">{car.info}</p>

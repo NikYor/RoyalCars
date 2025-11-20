@@ -19,7 +19,7 @@ const FormInput = ({ label, name, value, onChange, required = false }) => {
         <input
           type="text"
           name={name}
-          className="form-control"
+          className="form-control background-color-red"
           value={value}
           onChange={onChange}
           required={required}

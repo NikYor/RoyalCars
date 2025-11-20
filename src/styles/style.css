@@ -467,3 +467,9 @@ main {
 .rounded-pill {
     box-shadow: 1px 11px 28px 0px rgba(0,0,0,0.63);
 }
+
+.catalog-scroll {
+  max-height: 87vh;       /* ограничаваме височината */
+  overflow-y: auto;        /* включваме вертикален скрол */
+  padding-right: 10px;     /* малко място за скрол бара */
+}

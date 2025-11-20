@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 const containerStyle = {
   width: '100%',
   height: '70vh',
+  boxShadow: "1px 2px 18px 0px rgba(0,0,0,0.63)"
 };
 
 function getLocation() {
