@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { AuthContext } from "../context/AuthContext";
 import { requestAdmin } from "../services/authService";
 import { setMessage, setError, clearFeedback } from "../store/feedbackSlice";
-import NotificationBanner from '../widgets/NotificationBanner';
+import NotificationBanner from '../components/NotificationBanner';
 
 const Profile = () => {
   const { user, isAdmin } = useContext(AuthContext);
@@ -85,7 +85,7 @@ const Profile = () => {
             <NavLink to="/cars/manage" className="btn btn-outline-warning rounded-pill mr-3">
               ✏️ Manage Cars
             </NavLink>
-            <NavLink to="/users/manage" className="btn btn-outline-info rounded-pill mr-3">
+            <NavLink to="/users/manage" className="btn btn-outline-info rounded-pill mr-3 position-relative">
               👥 Manage Users
               <NotificationBanner/>
             </NavLink>

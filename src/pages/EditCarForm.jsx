@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getCarById, updateCar } from '../services/carService';
-import FormInput from './FormInput';
-import LocationPicker from './LocationPicker';
+import FormInput from '../components/FormInput';
+import LocationPicker from '../components/LocationPicker';
 import { setError, setMessage, clearFeedback } from '../store/feedbackSlice';
 
 const EditCarForm = () => {
@@ -13,15 +13,14 @@ const EditCarForm = () => {
 
   const [formData, setFormData] = useState({
     name: '',
-    category: '',
-    info: '',
+    transmission: '',
+    mileage: '',
     date: '',
-    location: '',
     lat: '',
     lng: '',
     price: '',
-    status: 'free',
     image: '',
+    status: 'free',
   });
 
   useEffect(() => {
@@ -38,10 +37,9 @@ const EditCarForm = () => {
         const car = await getCarById(id, token);
         setFormData({
           name: car.name || '',
-          category: car.category || '',
-          info: car.info || '',
+          transmission: car.transmission || '',
+          mileage: car.mileage?.toString() || '',
           date: car.date || '',
-          location: car.location || '',
           lat: car.lat?.toString() || '',
           lng: car.lng?.toString() || '',
           price: car.price?.toString() || '',
@@ -98,55 +96,57 @@ const EditCarForm = () => {
   };
 
   return (
-    <div className="container py-5 w-50" style={{overflowY: 'auto'}}>
+    <div className="container-fluid" style={{ padding: '10px 15px' }}>
       <h2 className="text-center mb-4">Edit Car</h2>
-      <form onSubmit={handleSubmit}>
-        {[
-          'name', 'category', 'info', 'date',
-          'location', 'status', 'price', 'image',
-        ].map((field) => (
+      <div className="mb-4 d-flex">
+        <form onSubmit={handleSubmit} className='w-50 mr-3'>
+          {[
+            'name', 'transmission', 'mileage', 'date',
+            'status', 'price', 'image',
+          ].map((field) => (
+            <FormInput
+              key={field}
+              label={field}
+              name={field}
+              value={formData[field]}
+              onChange={handleChange}
+              required={field !== 'image'}
+            />
+          ))}
+
+          {/* Read-only lat/lng fields */}
           <FormInput
-            key={field}
-            label={field}
-            name={field}
-            value={formData[field]}
+            label="Latitude"
+            name="lat"
+            value={formData.lat}
             onChange={handleChange}
-            required={field !== 'image'}
+            required
+            readOnly
           />
-        ))}
-
-        {/* Read-only lat/lng fields */}
-        <FormInput
-          label="Latitude"
-          name="lat"
-          value={formData.lat}
-          onChange={handleChange}
-          required
-          readOnly
-        />
-        <FormInput
-          label="Longitude"
-          name="lng"
-          value={formData.lng}
-          onChange={handleChange}
-          required
-          readOnly
-        />
-
-        {/* Location Picker */}
-        <div className="mb-4">
-          <label className="form-label">Update Location on Map</label>
-          <LocationPicker
-            onLocationSelect={handleLocationSelect}
-            initialPosition={{
-              lat: parseFloat(formData.lat) || 42.6977,
-              lng: parseFloat(formData.lng) || 23.3219,
-            }}
+          <FormInput
+            label="Longitude"
+            name="lng"
+            value={formData.lng}
+            onChange={handleChange}
+            required
+            readOnly
           />
+          <div className='justify-content-center d-flex gap-3'>
+            <button type="submit" className="btn btn-primary w-50 rounded-pill mr-5">UPDATE</button>
+            <button
+              type="button"
+              className="btn btn-secondary w-50 rounded-pill ml-5"
+              onClick={() => navigate('/cars/manage')}
+            >
+              CANCEL
+            </button>
+          </div>
+        </form>
+        <div className='w-50 d-flex flex-column justify-content-center'>
+          <div className="form-label mb-2" >SELECT LOCATION</div>
+          <LocationPicker onLocationSelect={handleLocationSelect} />
         </div>
-
-        <button type="submit" className="btn btn-primary w-100">Update</button>
-      </form>
+      </div>
     </div>
   );
 };

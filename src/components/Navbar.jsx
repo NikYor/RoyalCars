@@ -1,7 +1,7 @@
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import NotificationBanner from '../widgets/NotificationBanner';
+import NotificationBanner from './NotificationBanner';
 
 const Navbar = () => {
   const { isAuthenticated, logout, isAdmin } = useContext(AuthContext);
@@ -50,7 +50,7 @@ const Navbar = () => {
 
               {isAuthenticated ? (
                 <>
-                  <NavLink to="/profile" className="nav-item nav-link">Profile
+                  <NavLink to="/profile" className="nav-item nav-link position-relative">Profile
                     {location.pathname != '/profile' && location.pathname != '/users/manage'&& 
                     <NotificationBanner/>
                     }

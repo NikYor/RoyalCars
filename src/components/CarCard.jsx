@@ -8,7 +8,7 @@ const CarCard = ({ id, image, title, year, transmission, mileage, price }) => {
 
   return (
     <div className="col-lg-4 col-md-6 mb-2">
-      <div className="rent-item mb-4">
+      <div className="rent-item mb-4 rounded-lg">
         <img className="mb-4 responsive-img" src={image} alt={title} />
         <div>
         <h4 className="text-uppercase mb-4">{title}</h4>
@@ -27,10 +27,10 @@ const CarCard = ({ id, image, title, year, transmission, mileage, price }) => {
           </div>
         </div>
         <div className="d-flex justify-content-center mb-4">
-          {isLogged && <Link to={`/booking/${id}/${title}`} className="btn btn-primary px-3 mr-3">
+          {isLogged && <Link to={`/booking/${id}/${title}`} className="btn btn-primary px-3 mr-3 rounded-lg">
             ${price}/Day – Book Now
           </Link>}
-          <Link to={`/cars/${id}`} className="btn btn-primary px-3}">
+          <Link to={`/cars/${id}`} className="btn btn-primary px-3 rounded-lg">
             View Details
           </Link>
         </div>

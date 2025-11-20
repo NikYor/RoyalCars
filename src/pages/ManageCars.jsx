@@ -48,7 +48,7 @@ const ManageCars = () => {
           <thead>
             <tr>
               <th>Name</th>
-              <th>Transmition</th>
+              <th>Transmission</th>
               <th>Location</th>
               <th>Price</th>
               <th>Status</th>
@@ -59,7 +59,7 @@ const ManageCars = () => {
             {cars.map(car => (
               <tr key={car._id}>
                 <td>{car.name}</td>
-                <td>{car.transmition}</td>
+                <td>{car.transmission}</td>
                 <td>{car.location}</td>
                 <td>{car.price}</td>
                 <td>{car.status}</td>

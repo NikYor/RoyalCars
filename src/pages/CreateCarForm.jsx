@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { createCar } from '../services/carService';
-import FormInput from './FormInput';
+import FormInput from '../components/FormInput';
+import LocationPicker from '../components/LocationPicker';
 import { setError, setMessage, clearFeedback } from '../store/feedbackSlice';
-import LocationPicker from './LocationPicker';
 
 const CreateCarForm = () => {
   const dispatch = useDispatch();
@@ -63,21 +63,21 @@ const CreateCarForm = () => {
   };
 
   return (
-    <div className="container-fluid" style={{padding: '10px 15px'}}>
+    <div className="container-fluid" style={{ padding: '10px 15px' }}>
       <h2 className="text-center mb-4">Create New Car</h2>
       <div className="mb-4 d-flex">
         <form onSubmit={handleSubmit} className='w-50 mr-3'>
-        {[
-          'name', 'transmission', 'mileage', 'date', 'price', 'image',
-        ].map((field) => (
-          <FormInput
-            key={field}
-            label={field}
-            name={field}
-            value={formData[field]}
-            onChange={handleChange}
-            required={field !== 'image'}
-          />
+          {[
+            'name', 'transmission', 'mileage', 'date', 'price', 'image',
+          ].map((field) => (
+            <FormInput
+              key={field}
+              label={field}
+              name={field}
+              value={formData[field]}
+              onChange={handleChange}
+              required={field !== 'image'}
+            />
           ))}
           <FormInput
             label="Latitude"
@@ -96,15 +96,22 @@ const CreateCarForm = () => {
             readOnly
           />
           <div className='justify-content-center d-flex'>
-            <button type="submit" className="btn btn-primary w-50 rounded-pill">Submit</button>
+            <button type="submit" className="btn btn-primary w-50 rounded-pill mr-5">CREATE</button>
+            <button
+              type="button"
+              className="btn btn-secondary w-50 rounded-pill ml-5"
+              onClick={() => navigate('/profile')}
+            >
+              CANCEL
+            </button>
           </div>
-          </form>
+        </form>
         <div className='w-50 d-flex flex-column justify-content-center'>
           <div className="form-label mb-2" >SELECT LOCATION</div>
-          <LocationPicker onLocationSelect={handleLocationSelect}/>
+          <LocationPicker onLocationSelect={handleLocationSelect} />
         </div>
       </div>
-      
+
     </div>
   );
 };
