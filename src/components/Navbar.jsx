@@ -1,9 +1,11 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import NotificationBanner from '../widgets/NotificationBanner';
 
 const Navbar = () => {
   const { isAuthenticated, logout, isAdmin } = useContext(AuthContext);
+  const location = useLocation();
 
   return (
     <div className="container-fluid position-relative nav-bar p-0">
@@ -48,7 +50,11 @@ const Navbar = () => {
 
               {isAuthenticated ? (
                 <>
-                  <NavLink to="/profile" className="nav-item nav-link">Profile</NavLink>
+                  <NavLink to="/profile" className="nav-item nav-link">Profile
+                    {location.pathname != '/profile' && location.pathname != '/users/manage'&& 
+                    <NotificationBanner/>
+                    }
+                  </NavLink>
                   <button className="btn tn-sm tn-outline-light ml-2 text-white" onClick={logout}>LOGOUT</button>
                 </>
               ) : (

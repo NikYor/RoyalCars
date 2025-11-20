@@ -1,16 +1,16 @@
 import { NavLink } from 'react-router-dom';
 import React, { useState, useContext } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { AuthContext } from "../context/AuthContext";
 import { requestAdmin } from "../services/authService";
 import { setMessage, setError, clearFeedback } from "../store/feedbackSlice";
+import NotificationBanner from '../widgets/NotificationBanner';
 
 const Profile = () => {
   const { user, isAdmin } = useContext(AuthContext);
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [company, setCompany] = useState("");
-  const { actionCount } = useSelector(state => state.feedback);
 
   const handleSubmit = async () => {
     dispatch(clearFeedback());
@@ -87,11 +87,7 @@ const Profile = () => {
             </NavLink>
             <NavLink to="/users/manage" className="btn btn-outline-info rounded-pill mr-3">
               👥 Manage Users
-              {actionCount > 0 && (
-                <span className="notification-pill">
-                  {actionCount}
-                </span>
-              )}
+              <NotificationBanner/>
             </NavLink>
           </div>
         </>

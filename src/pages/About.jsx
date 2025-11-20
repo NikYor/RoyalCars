@@ -3,41 +3,39 @@ import {useState} from "react";
 const About = () => {
   const [open, setOpen] = useState(false);
   return (
-    <div className="container py-5">
+    <div className="p-4">
       <div className="row align-items-center">
-        {/* Image section */}
         <div className="col-md-6 mb-4 mb-md-0">
           <img
-            src="/about.jpg" // сложи твоята картинка тук
+            src="/about.jpg"
             alt="About Royal Car"
             className="img-fluid rounded shadow"
             style={{ objectFit: "cover", width: "100%", height: "100%" }}
           />
         </div>
 
-        {/* Text section */}
-        <div className="col-md-6">
-          <h1 className="mb-4">About Royal Car</h1>
-          <p className="lead">
-            Royal Car is a modern platform for car booking and route simulation.
-            Our mission is to make mobility smarter, safer, and more
-            user‑friendly.
+        <div className="col-md-6" style={{height: '83vh', fontSize: '4rem'}}>
+          <h1 className="mb-4" >About Royal Car</h1>
+          <p className="lead" style={{fontWeight: 'bold', fontSize: '1.5rem'}}>
+              Royal Car is a modern platform for car booking and route simulation.
+              Our mission is to make mobility smarter, safer, and more
+              user‑friendly.
           </p>
 
-          <h4 className="mt-4">What We Offer</h4>
-          <ul className="list-unstyled">
+          <h2 className="mt-4">What We Offer</h2>
+          <ul className="list-unstyled" style={{fontWeight: 'bold', fontSize: '1.5rem'}}>
             <li>🚗 Easy car booking</li>
             <li>📍 Real‑time route simulation</li>
             <li>🔒 Secure authentication and role management</li>
             <li>⚡ Fast and intuitive interface</li>
           </ul>
 
-          <h4 className="mt-4">Our Story</h4>
-          <p>
+          <h2 className="mt-4">Our Story</h2>
+          <p style={{fontWeight: 'bold', fontSize: '1.5rem'}}>
             Developed by{" "}
             <span
               onClick={() => setOpen(true)}
-              style={{ cursor: "pointer", fontWeight: "bold", color: "#007bff" }}
+              style={{ cursor: "pointer", fontWeight: "bold", color: "#007bff", fontSize: '1.5rem' }}
             >
               Nikolay Yordanov
             </span>
