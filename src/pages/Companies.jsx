@@ -22,13 +22,14 @@ const Companies = () => {
         {companies.map((companyObj, idx) => {
           const companyName = Object.keys(companyObj)[0];
           const carsList = companyObj[companyName];
+          const isSelected = selectedCompany?.name === companyName;
 
           return (
             <div className="col-md-4 mb-4" key={idx}>
-              <div className="card h-100 shadow-sm">
+              <div className={`card h-100 shadow-light rounded-lg  ${isSelected ? "rent-item active" : ""}`}>
                 <div className="card-body d-flex flex-column">
-                  <h5 className="card-title">{companyName}</h5>
-                  <p className="card-text">Cars available: {carsList.length}</p>
+                  <h2 className="card-title">{companyName}</h2>
+                  <h4 className="card-text">Cars available: {carsList.length}</h4>
                   <button
                     className="btn btn-primary mt-auto rounded-pill"
                     onClick={() => setSelectedCompany({ name: companyName, cars: carsList })}
@@ -42,7 +43,6 @@ const Companies = () => {
         })}
       </div>
 
-      {/* условно рендериране на CarsByCompany */}
       {selectedCompany && (
         <CarsByCompany
           companyName={selectedCompany.name}

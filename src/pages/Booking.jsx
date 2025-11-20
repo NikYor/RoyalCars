@@ -76,7 +76,12 @@ const Booking = () => {
           </div>
         ))}
         <div className="col-12 text-center mt-4">
-          <button type="submit" className="btn btn-primary px-5">
+          <button type="button" className="btn btn-secondary px-5 mr-5 rounded-pill"
+            onClick={() => navigate(-1)}
+          >
+            Cancel
+          </button>
+          <button type="submit" className="btn btn-primary px-5 rounded-pill">
             Confirm Booking
           </button>
         </div>

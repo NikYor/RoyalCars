@@ -1,14 +1,18 @@
+import { useNavigate } from "react-router-dom";
+
 const CarsByCompany = ({ companyName, cars, onClose }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="mt-4">
       <h3>{companyName} Cars</h3>
-      <button className="btn btn-secondary mb-3" onClick={onClose}>
+      <button className="btn btn-secondary mb-3 rounded-pill" onClick={onClose}>
         Close
       </button>
       <div className="row">
         {cars.map((car) => (
           <div className="col-md-4 mb-4" key={car._id}>
-            <div className="card h-100 shadow-sm">
+            <div className="card h-100 shadow-light rounded-lg">
               <img
                 src={car.image}
                 alt={car.name}
@@ -19,7 +23,9 @@ const CarsByCompany = ({ companyName, cars, onClose }) => {
                 <p>Transmission: {car.transmission}</p>
                 <p>Mileage: {car.mileage}</p>
                 <p>Price: ${car.price}</p>
-                <button className="btn btn-primary mt-auto rounded-pill">
+                <button className="btn btn-primary mt-auto rounded-pill"
+                  onClick={() => navigate(`/booking/${car._id}/${car.name}`)}
+                >
                   Reserve Now
                 </button>
               </div>
