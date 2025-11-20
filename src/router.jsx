@@ -15,9 +15,9 @@ import Companies from './pages/Companies';
 import EditCarForm from './pages/EditCarForm';
 import CreateCarForm from './pages/CreateCarForm';
 
-import PrivateRoute from './components/PrivateRoute';
-import GuestRoute from './components/GuestRoute';
-import AdminRoute from './components/AdminRoute';
+import PrivateRoute from './guards/PrivateRoute';
+import GuestRoute from './guards/GuestRoute';
+import AdminRoute from './guards/AdminRoute';
 
 const RouterConfig = () => {
   return (
