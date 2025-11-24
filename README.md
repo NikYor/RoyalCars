@@ -17,7 +17,6 @@ Frontend е изграден с **React + Vite**, а backend сървърът е
   - React 19 + Vite 7
   - React Router DOM 7
   - Redux Toolkit за глобално състояние
-  - Leaflet / React‑Leaflet за карти
   - @react-google-maps/api за Google Maps интеграция
 - **Backend**
   - Node.js + Express (в папка `server/`)

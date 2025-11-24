@@ -12,7 +12,7 @@ const BookingList = () => {
       setBookings(data);
     };
     fetchBookings();
-  }, []);
+  }, [token]);
 
   return (
     <div className="container-fluid py-5 px-0">

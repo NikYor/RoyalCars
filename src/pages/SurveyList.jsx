@@ -43,7 +43,7 @@ const SurveyList = () => {
     }
 
     getSurveysList();
-  }, []);
+  }, [token]);
 
   return (
     <div className="container py-4">

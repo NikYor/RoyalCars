@@ -1,10 +1,4 @@
-import { Link } from "react-router-dom";
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
-
 const BookCard = ({ title, count }) => {
-  const { user } = useContext(AuthContext);
-  const isLogged = !!user
 
   return (
     <div className="col-lg-4 col-md-6 mb-2">

@@ -23,6 +23,7 @@ const CarDetail = () => {
   const [status, setStatus] = useState("scheduled");
   const [route, setRoute] = useState([]);
   const isLoaded = useSelector((state) => state.maps.isLoaded);
+  const {cars} = useSelector((state) => state.completed);
   const animationRef = useRef(null);
   const previousPositionRef = useRef(null);
 

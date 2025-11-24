@@ -47,8 +47,6 @@ export const deleteCar = async (id) => {
 };
 
 export const getMyCars = async () => {
-  const token = localStorage.getItem('token');
-
   const res = await secureFetch(`${BASE_URL}/my-cars`, {});
 
   if (!res.ok) throw new Error('Failed to fetch your cars');
