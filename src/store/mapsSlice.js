@@ -1,16 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  isLoaded: false,
-};
-
 const mapsSlice = createSlice({
   name: "maps",
-  initialState,
+  initialState: {
+    isLoaded: false
+  },
   reducers: {
     setLoaded(state, action) {
       state.isLoaded = action.payload;
-    },
+    }
   },
 });
 

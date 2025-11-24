@@ -1,7 +1,7 @@
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import NotificationBanner from './NotificationBanner';
+import NotificationWrapper from './NotificationWrapper';
 
 const Navbar = () => {
   const { isAuthenticated, logout, isAdmin } = useContext(AuthContext);
@@ -17,8 +17,11 @@ const Navbar = () => {
           <button
             type="button"
             className="navbar-toggler"
-            data-toggle="collapse"
-            data-target="#navbarCollapse"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarCollapse"
+            aria-controls="navbarCollapse"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -42,7 +45,7 @@ const Navbar = () => {
                 <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                 <div className="dropdown-menu rounded-0 m-0">
                   <NavLink to="/companies" className="dropdown-item">Companies</NavLink>
-                  <NavLink to="/testimonials" className="dropdown-item">Testimonial</NavLink>
+                  <NavLink to="/survey/list" className="dropdown-item">Surveys</NavLink>
                 </div>
               </div>
               
@@ -51,8 +54,8 @@ const Navbar = () => {
               {isAuthenticated ? (
                 <>
                   <NavLink to="/profile" className="nav-item nav-link position-relative">Profile
-                    {location.pathname != '/profile' && location.pathname != '/users/manage'&& 
-                    <NotificationBanner/>
+                    {location.pathname != '/profile' && 
+                    <NotificationWrapper/>
                     }
                   </NavLink>
                   <button className="btn tn-sm tn-outline-light ml-2 text-white" onClick={logout}>LOGOUT</button>

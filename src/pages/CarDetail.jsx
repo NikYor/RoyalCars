@@ -1,9 +1,10 @@
 import { useParams, Link } from 'react-router-dom';
 import { getCarById } from '../services/carService';
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { socket } from "../utils/socket";
 import { GoogleMap, Marker, Polyline } from "@react-google-maps/api";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addCompletedCar } from "../store/completedSlice";
 
 const containerStyle = {
   width: "100%",
@@ -12,6 +13,7 @@ const containerStyle = {
 };
 
 const CarDetail = () => {
+  const dispatch = useDispatch();
   const { id } = useParams();
   const [car, setCar] = useState(null);
   const [carStatus, setCarStatus] = useState('free')
@@ -21,7 +23,6 @@ const CarDetail = () => {
   const [status, setStatus] = useState("scheduled");
   const [route, setRoute] = useState([]);
   const isLoaded = useSelector((state) => state.maps.isLoaded);
-  
   const animationRef = useRef(null);
   const previousPositionRef = useRef(null);
 
@@ -31,28 +32,28 @@ const CarDetail = () => {
     }
 
     const startTime = performance.now();
-    
+
     const animate = (currentTime) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      
+
       const easeOutCubic = 1 - Math.pow(1 - progress, 3);
-      
+
       const currentLat = startPos.lat + (endPos.lat - startPos.lat) * easeOutCubic;
       const currentLng = startPos.lng + (endPos.lng - startPos.lng) * easeOutCubic;
-      
-      setAnimatedPosition({ 
-        lat: currentLat, 
-        lng: currentLng 
+
+      setAnimatedPosition({
+        lat: currentLat,
+        lng: currentLng
       });
-      
+
       if (progress < 1) {
         animationRef.current = requestAnimationFrame(animate);
       } else {
         animationRef.current = null;
       }
     };
-    
+
     animationRef.current = requestAnimationFrame(animate);
   };
 
@@ -83,10 +84,10 @@ const CarDetail = () => {
       if (data.carId === id) {
         const newPosition = { lat: data.lat, lng: data.lng };
         setPosition(newPosition);
-        
+
         animateMarker(previousPositionRef.current, newPosition);
         previousPositionRef.current = newPosition;
-        
+
         setCarStatus(data.carStatus);
         setRoute([]);
       }
@@ -96,10 +97,10 @@ const CarDetail = () => {
       if (data.carId === id) {
         const newPosition = { lat: data.lat, lng: data.lng };
         setPosition(newPosition);
-        
+
         animateMarker(previousPositionRef.current, newPosition, 1500);
         previousPositionRef.current = newPosition;
-        
+
         setStatus(data.status);
         setCarStatus(data.carStatus);
         setRoute((prev) => [...prev, { lat: data.lat, lng: data.lng }]);
@@ -111,6 +112,8 @@ const CarDetail = () => {
         setStatus(data.status);
         setCarStatus(data.carStatus)
         setCarMileage(data.carMileage)
+
+        dispatch(addCompletedCar({[data.carId]: new Date().toLocaleString('ro-RO')}));
       }
     });
 
@@ -118,7 +121,7 @@ const CarDetail = () => {
       socket.off("carUpdate");
       socket.off("newRoute");
       socket.off("complete");
-      
+
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
@@ -159,15 +162,15 @@ const CarDetail = () => {
               center={animatedPosition}
               zoom={13}
             >
-              <Marker 
+              <Marker
                 position={animatedPosition}
               />
               {route.length > 1 && (
                 <Polyline
                   path={route}
-                  options={{ 
-                    strokeColor: "#30a026ff", 
-                    strokeOpacity: 0.8, 
+                  options={{
+                    strokeColor: "#30a026ff",
+                    strokeOpacity: 0.8,
                     strokeWeight: 3,
                     icons: [{
                       icon: {

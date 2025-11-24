@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { AuthContext } from '../context/AuthContext';
 import { getPendingRequests, approveAdmin } from '../services/authService';
 import { setError, setMessage, clearFeedback } from '../store/feedbackSlice';
-import NotificationBanner from '../components/NotificationBanner';
+import NotificationAdmin from '../components/NotificationAdmin';
 
 const ManageUsers = () => {
   const { user, isAdmin } = useContext(AuthContext);
@@ -68,7 +68,7 @@ const ManageUsers = () => {
                     onClick={() => handleApprove(user._id)}
                   >
                     Approve
-                    <NotificationBanner/>
+                    <NotificationAdmin/>
                   </button>
                 </td>
               </tr>

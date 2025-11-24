@@ -15,15 +15,14 @@ const FeedbackOverlay = () => {
       setShouldRender(true);
       setAnimateOut(false);
 
-      // Wait 3s before starting the animation
       showTimer = setTimeout(() => {
-        setAnimateOut(true); // triggers wipe-out-left
-        // Wait for animation to finish before clearing Redux
+        setAnimateOut(true); 
+        
         cleanupTimer = setTimeout(() => {
           dispatch(clearFeedback());
           setShouldRender(false);
-        }, 2500); // match animation duration
-      }, 3000); // visible for 3s
+        }, 2500);
+      }, 3000);
     }
 
     return () => {
