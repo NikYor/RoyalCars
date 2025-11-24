@@ -17,7 +17,7 @@ const BookingList = () => {
   return (
     <div className="container-fluid py-5 px-0">
       <div className="container pt-5 pb-3">
-        <h1 className="display-4 text-uppercase text-center mb-5">Book List</h1>
+        <h1 className="display-4 text-uppercase text-center mb-5">Booking List</h1>
         <div className="row">
           {bookings.map((b, index) => (
             <BookCard

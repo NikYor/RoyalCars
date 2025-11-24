@@ -46,11 +46,12 @@ const SurveyList = () => {
   }, []);
 
   return (
-    <div className="container p-5">
-      <h1 className="text-center mb-4">Surveys</h1>
-      <ul className="col-md-4">
-        {mappedSurveys.map((survey) => (
-          <li key={survey._id} className="card h-100 shadow-light rounded-lg px-2">
+    <div className="container py-4">
+      <h2 className="text-center mb-4">Surveys</h2>
+      <div className="row">
+        {mappedSurveys.map((survey, idx) => (
+          <div key={survey._id} className="col-md-4 mb-4">
+            <div className={`card h-100 shadow-light rounded-lg p-3`}>
             <h2>{survey.carName}</h2>
             <div className="mb-2 text-center">
               {[...Array(5)].map((_, i) => (
@@ -68,9 +69,11 @@ const SurveyList = () => {
             </div>
             <p>{survey.text}</p>
             <h4 className="align-self-end">{survey.userEmail}</h4>
-          </li>
+            </div>
+
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   )
 }

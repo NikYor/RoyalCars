@@ -473,3 +473,7 @@ main {
   overflow-y: auto;        /* включваме вертикален скрол */
   padding-right: 10px;     /* малко място за скрол бара */
 }
+
+.card.shadow-light.rounded-lg {
+    justify-content: space-between;
+}
