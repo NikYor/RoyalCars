@@ -7,7 +7,8 @@ import { register,
          requestAdmin, 
          approveAdmin,
          refreshToken,
-         getPendingAdminRequests } from '../services/userService.js';
+         getPendingAdminRequests,
+         getUserById } from '../services/userService.js';
 import authenticateToken from '../middlewares/authMiddleware.js';
 
 authRouter.post('/register', register);
@@ -17,5 +18,5 @@ authRouter.post('/logout', logout);
 authRouter.post('/request-admin', authenticateToken, requestAdmin);
 authRouter.post('/admin/approve/:userId', authenticateToken, approveAdmin)
 authRouter.get('/admin/pending',authenticateToken, getPendingAdminRequests)
-
+authRouter.get('/user/:userId', getUserById)
 export default authRouter;

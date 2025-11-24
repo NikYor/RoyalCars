@@ -6,6 +6,19 @@ import bcrypt from 'bcrypt';
 
 const config = loadConfig();
 
+export async function getUserById(req, res) {
+  let user;
+  try { 
+    user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+  res.json(user);
+}
+
 export async function register(req, res) {
   const { email, password } = req.body;
 

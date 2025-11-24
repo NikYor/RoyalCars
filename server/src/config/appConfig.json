@@ -121,6 +121,22 @@
         "default": "scheduled"
       }
     },
+    "survey": {
+      "car": {
+        "type": "ObjectId",
+        "ref": "Cars"
+      },
+      "text": {
+        "type": "String"
+      },
+      "rating": {
+        "type": "Number"
+      },
+      "userId": {
+        "type": "ObjectId",
+        "ref": "User"
+      }
+    },
     "user": {
       "email": {
         "type": "String",

@@ -12,9 +12,9 @@ const names = Object.keys(config.model)
 
 const Item = buildModelFromConfig(names[0], config.model);
 const Booking = buildModelFromConfig(names[1], config.model);
-const User = buildModelFromConfig(names[2], config.model);
-const Company = buildModelFromConfig(names[3], config.model);
-
+const Survey = buildModelFromConfig(names[2], config.model);
+const User = buildModelFromConfig(names[3], config.model);
+const Company = buildModelFromConfig(names[4], config.model);
 // async function ensureInitialAdmin(User) {
 //   const admins = await User.find({ role: 'admin' });
 //   if (admins.length === 0) {
@@ -30,4 +30,4 @@ const Company = buildModelFromConfig(names[3], config.model);
 
 // await ensureInitialAdmin(User);
 
-export { Item, Booking, User, Company };
+export { Item, Booking, User, Company, Survey };

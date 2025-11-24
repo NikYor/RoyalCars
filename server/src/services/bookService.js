@@ -1,4 +1,4 @@
-import { Booking, User } from '../models/index.js';
+import { Booking, User, Survey } from '../models/index.js';
 
 
 export async function bookCreate(req, res) {
@@ -41,4 +41,23 @@ export async function bookList(req, res) {
     res.status(500).json({ message: "Error fetching grouped bookings", error: err.message });
   }
 };
+
+export async function surveyCreate(req, res) {
+  try {
+    const survey = new Survey(req.body);
+    await survey.save();
+    res.status(201).json(survey);
+  } catch (err) {
+    res.status(400).json({ message: 'Error creating survey', error: err.message });
+  }
+}
+
+export async function surveyList(req, res) {
+  try {
+    const surveys = await Survey.find();
+    res.json(surveys);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching surveys', error: err.message });
+  }
+}
 
