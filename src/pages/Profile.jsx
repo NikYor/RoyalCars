@@ -4,13 +4,17 @@ import { useDispatch } from "react-redux";
 import { AuthContext } from "../context/AuthContext";
 import { requestAdmin } from "../services/authService";
 import { setMessage, setError, clearFeedback } from "../store/feedbackSlice";
-import NotificationBanner from '../components/NotificationBanner';
+import NotificationAdmin from '../components/NotificationAdmin';
+import NotificationSurvey from '../components/NotificationSurvey';
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
   const { user, isAdmin } = useContext(AuthContext);
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [company, setCompany] = useState("");
+  const { cars } = useSelector((state) => state.completed)
+  const { actionCount } = useSelector(state => state.feedback);
 
   const handleSubmit = async () => {
     dispatch(clearFeedback());
@@ -31,11 +35,18 @@ const Profile = () => {
         <>
           <p>You are a regular user.</p>
           <button
-            className="btn btn-outline-secondary"
+            className="btn btn-outline-warning rounded-pill"
             onClick={() => setShowModal(true)}
           >
-            Request Admin
+            🛡️ Request Admin
           </button>
+           {cars.length > 0 && <NavLink
+            to="/survey/create"
+            className="btn btn-outline-success rounded-pill mr-3 position-relative"
+          >
+            📝 Take Survey
+            <NotificationSurvey />
+          </NavLink>}
 
           {showModal && (
             <div
@@ -86,8 +97,15 @@ const Profile = () => {
             </NavLink>
             <NavLink to="/users/manage" className="btn btn-outline-info rounded-pill mr-3 position-relative">
               👥 Manage Users
-              <NotificationBanner/>
+              {actionCount > 0 && <NotificationAdmin />}
             </NavLink>
+            {cars.length > 0 && <NavLink
+              to="/survey/create"
+              className="btn btn-outline-success rounded-pill mr-3 position-relative"
+            >
+              📝 Take Survey
+              <NotificationSurvey />
+            </NavLink>}
           </div>
         </>
       )}

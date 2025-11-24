@@ -66,3 +66,28 @@ export const bookingList = async (token) => {
   if (!res.ok) throw new Error('Failed to fetch bookings');
   return res.json();
 };
+
+export const saveSurvey = async (surveyData, token) => {
+  const res = await fetch(`http://localhost:3000/api/survey`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${token}`,
+    },
+    method: 'POST',
+    body: JSON.stringify(surveyData),
+  });
+  if (!res.ok) throw new Error('Failed to save survey');
+  return res.json();
+}
+
+export const getSurveys = async (token) => {
+  const res = await fetch(`http://localhost:3000/api/survey`, {
+    headers: {
+      Authorization: `${token}`,
+    }
+  });
+  if (!res.ok) throw new Error('Failed to fetch surveys');
+  return res.json();
+}
+
+

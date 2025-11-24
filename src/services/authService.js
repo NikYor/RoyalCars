@@ -127,4 +127,13 @@ export const approveAdmin = async (userId) => {
 };
 
 
+export const getUserById = async (userId) => {
+  const res = await secureFetch(`${BASE_URL}/user/${userId}`, {});
+
+  if (!res.ok) throw new Error('Failed to fetch user');
+  return await res.json();
+};
+
+
+
 

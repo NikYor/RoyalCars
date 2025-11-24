@@ -14,6 +14,8 @@ import ManageCars from './pages/ManageCars';
 import Companies from './pages/Companies';
 import EditCarForm from './pages/EditCarForm';
 import CreateCarForm from './pages/CreateCarForm';
+import Survey from './pages/Survey';
+import SurveyList from './pages/SurveyList';
 
 import PrivateRoute from './guards/PrivateRoute';
 import GuestRoute from './guards/GuestRoute';
@@ -33,6 +35,9 @@ const RouterConfig = () => {
       <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>}/>
       <Route path="/register" element={<GuestRoute><Register /></GuestRoute>}/>
       <Route path="/unauthorized" element={<Unauthorized />} />
+      <Route path="/survey/create" element={<Survey />} />
+      <Route path="/survey/list" element={<SurveyList />} />
+
       <Route path="/cars/manage" element={<AdminRoute><ManageCars /></AdminRoute>} />
       <Route path="/users/manage" element={<AdminRoute><ManageUsers /></AdminRoute>} />
       <Route path="/cars/create" element={<PrivateRoute><CreateCarForm /></PrivateRoute>} />
