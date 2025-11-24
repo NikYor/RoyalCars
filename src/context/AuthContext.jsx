@@ -4,7 +4,7 @@ import { loginRequest, logoutRequest } from '../services/authService';
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // could be { email, role, token }
+  const [user, setUser] = useState(null);
   const [userId, setUserId] = useState(null);
   const [token, setToken] = useState(null);
 
