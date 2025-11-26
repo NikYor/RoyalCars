@@ -114,6 +114,24 @@ const Home = () => {
     }, 500); // Match this with CSS transition duration
   };
 
+  useEffect(() => {
+  const handleKeyDown = (event) => {
+    if (event.key === 'ArrowLeft') {
+      prevSlide();
+    } else if (event.key === 'ArrowRight') {
+      nextSlide();
+    } else if (event.key === 'Enter') {
+      book();
+    }
+  };
+
+  window.addEventListener('keydown', handleKeyDown);
+
+  return () => {
+    window.removeEventListener('keydown', handleKeyDown);
+  };
+}, [slides, index]);
+
   const nextSlide = () => handleSlideChange((index + 1) % slides.length);
   const prevSlide = () => handleSlideChange((index - 1 + slides.length) % slides.length);
 

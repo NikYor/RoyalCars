@@ -34,19 +34,23 @@ const Profile = () => {
       {!isAdmin && (
         <>
           <p>You are a regular user.</p>
+          <div className="text-center mb-4 d-flex flex-wrap justify-content-center">
           <button
             className="btn btn-outline-warning rounded-pill"
             onClick={() => setShowModal(true)}
           >
-            🛡️ Request Admin
+            🛡️ Request Admin Role
           </button>
-           {cars.length > 0 && <NavLink
-            to="/survey/create"
-            className="btn btn-outline-success rounded-pill mr-3 position-relative"
-          >
-            📝 Take Survey
-            <NotificationSurvey />
-          </NavLink>}
+           {cars.length > 0 && 
+              <NavLink
+                to="/survey/create"
+                className="btn btn-outline-success rounded-pill mr-3 position-relative"
+              >
+                📝 Take Survey
+                <NotificationSurvey />
+              </NavLink>
+          }
+          </div>
 
           {showModal && (
             <div
