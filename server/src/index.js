@@ -8,7 +8,7 @@ import "./services/bookingWatcher.js"
 
 import { createServer } from "http";
 import { Server } from "socket.io";
-import aliveRouter from "./routes/aliveRoutes.js";
+import appRouter from "./routes/appRoutes.js";
 
 const config = loadConfig();
 
@@ -30,7 +30,7 @@ app.use(cors({
 app.use(helmet());
 app.use(express.json());
 
-app.use('/alive', aliveRouter)
+app.use('/', appRouter)
 app.use('/api', routes)
 
 io.on("connection", (socket) => {

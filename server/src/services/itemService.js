@@ -7,7 +7,7 @@ export async function getAllCars(req, res) {
 
 export async function getCarById(req, res) {
   const item = await Item.findById(req.params.id).populate('createdBy', 'email').populate('registeredUsers', 'email');
-  if (!item) return res.status(404).json({ message: 'Error fetching uour car' });
+  if (!item) return res.status(404).json({ message: 'Error fetching your car' });
   res.json(item);
 }
 
