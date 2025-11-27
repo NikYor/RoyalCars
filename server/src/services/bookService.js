@@ -15,6 +15,18 @@ export async function bookCreate(req, res) {
   }
 }
 
+export async function bookById(req, res) {
+  try {
+    const booking = await Booking.find({car:req.params.id});
+    if (!booking) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+    res.json(booking);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching booking', error: err.message });
+  }
+}
+
 export async function bookList(req, res) {
   try {
     const grouped = await Booking.aggregate([
