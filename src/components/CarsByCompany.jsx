@@ -12,7 +12,7 @@ const CarsByCompany = ({ cars }) => {
               <img
                 src={car.image}
                 alt={car.name}
-                style={{ height: "200px", objectFit: "cover" }}
+                style={{ height: "200px", objectFit: "scale-down", margin: "10px"}}
               />
               <div className="card-body d-flex flex-column">
                 <h5>{car.name}</h5>

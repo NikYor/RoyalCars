@@ -469,9 +469,9 @@ main {
 }
 
 .catalog-scroll {
-  max-height: 87vh;       /* ограничаваме височината */
-  overflow-y: auto;        /* включваме вертикален скрол */
-  padding-right: 10px;     /* малко място за скрол бара */
+  max-height: 87vh;
+  overflow-y: auto;
+  padding-right: 10px;
 }
 
 .card.shadow-light.rounded-lg {

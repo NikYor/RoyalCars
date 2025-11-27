@@ -23,7 +23,7 @@ const Catalog = () => {
   }, [dispatch]);
 
   return (
-    <div className="container-fluid py-5 px-0">
+    <div className="container-fluid p-0">
       <div className="p-5 pb-3 catalog-scroll">
         <h1 className="display-4 text-uppercase text-center mb-5">Car Catalog</h1>
         <div className="row ">
