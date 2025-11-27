@@ -1,14 +1,10 @@
 import { useNavigate } from "react-router-dom";
 
-const CarsByCompany = ({ companyName, cars, onClose }) => {
+const CarsByCompany = ({ cars }) => {
   const navigate = useNavigate();
 
   return (
     <div className="mt-4">
-      <h3>{companyName} Cars</h3>
-      <button className="btn btn-secondary mb-3 rounded-pill" onClick={onClose}>
-        Close
-      </button>
       <div className="row">
         {cars.map((car) => (
           <div className="col-md-4 mb-4" key={car._id}>
