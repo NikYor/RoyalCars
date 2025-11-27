@@ -477,3 +477,15 @@ main {
 .card.shadow-light.rounded-lg {
     justify-content: space-between;
 }
+/* ============disable Google buttons======= */
+.gmnoprint {
+    display: none;
+}
+.gm-style-cc {
+    display: none;
+}
+
+#root > main > div > div > div.col-md-8 > div > div > div.gm-style > div:nth-child(14) > div > a > div > img {
+    display: none;
+}
+/* ============disable Google buttons======= */

@@ -162,6 +162,11 @@ const CarDetail = () => {
               mapContainerStyle={containerStyle}
               center={animatedPosition}
               zoom={13}
+              options={{
+                streetViewControl: false,
+                mapTypeControl: false,
+                fullscreenControl: true
+              }}
             >
               <Marker
                 position={animatedPosition}
