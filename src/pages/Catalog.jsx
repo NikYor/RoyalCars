@@ -31,7 +31,7 @@ const Catalog = () => {
             <CarCard
               key={index}
               id={car._id}
-              image={car.image || '/img/default-car.png'}
+              image={car.image}
               title={car.name}
               year={car.date}
               transmission={car.transmission}

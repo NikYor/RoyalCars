@@ -469,7 +469,7 @@ main {
 }
 
 .catalog-scroll {
-  max-height: 87vh;
+  max-height: 90vh;
   overflow-y: auto;
   padding-right: 10px;
 }

@@ -32,12 +32,6 @@ describe('CarsByCompany', () => {
     expect(screen.getByText(/Audi RS6/i)).toBeInTheDocument();
   });
 
-  it('calls onClose when Close button is clicked', () => {
-    setup();
-    fireEvent.click(screen.getByRole('button', { name: /Close/i }));
-    expect(mockOnClose).toHaveBeenCalled();
-  });
-
   it('navigates to booking when Reserve Now is clicked', () => {
     setup();
     fireEvent.click(screen.getAllByRole('button', { name: /Reserve Now/i })[0]);

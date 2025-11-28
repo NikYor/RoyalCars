@@ -46,8 +46,8 @@ const SurveyList = () => {
   }, [token]);
 
   return (
-    <div className="container py-4">
-      <h2 className="text-center mb-4">Surveys</h2>
+    <div className="container-fluid p-5">
+      <h1 className="display-4 text-uppercase text-center mb-5">Surveys</h1>
       <div className="row">
         {mappedSurveys.map((survey, idx) => (
           <div key={survey._id} className="col-md-4 mb-4">

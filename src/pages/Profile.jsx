@@ -29,14 +29,14 @@ const Profile = () => {
 
   return (
     <div className="container py-5" style={{ height: "83vh" }}>
-      <h2 className="text-center mb-4">Welcome, {user.email}</h2>
+      <h1 className="display-4 text-uppercase text-center mb-5">Welcome, {user.email}</h1>
 
       {!isAdmin && (
         <>
           <p>You are a regular user.</p>
           <div className="text-center mb-4 d-flex flex-wrap justify-content-center">
           <button
-            className="btn btn-outline-warning rounded-pill"
+            className="btn btn-outline-warning mr-3 bg-white rounded-pill"
             onClick={() => setShowModal(true)}
           >
             🛡️ Request Admin Role
@@ -44,7 +44,7 @@ const Profile = () => {
            {cars.length > 0 && 
               <NavLink
                 to="/survey/create"
-                className="btn btn-outline-success rounded-pill mr-3 position-relative"
+                className="btn btn-outline-success rounded-pill bg-white mr-3 position-relative"
               >
                 📝 Take Survey
                 <NotificationSurvey />
@@ -93,19 +93,19 @@ const Profile = () => {
         <>
           <p>You are an admin!</p>
           <div className="text-center mb-4 d-flex flex-wrap justify-content-center">
-            <NavLink to="/cars/create" className="btn btn-outline-primary rounded-pill mr-3">
+            <NavLink to="/cars/create" className="btn btn-outline-primary bg-white rounded-pill mr-3">
               ➕ Create New Car
             </NavLink>
-            <NavLink to="/cars/manage" className="btn btn-outline-warning rounded-pill mr-3">
+            <NavLink to="/cars/manage" className="btn btn-outline-warning bg-white rounded-pill mr-3">
               ✏️ Manage Cars
             </NavLink>
-            <NavLink to="/users/manage" className="btn btn-outline-info rounded-pill mr-3 position-relative">
+            <NavLink to="/users/manage" className="btn btn-outline-info bg-white rounded-pill mr-3 position-relative">
               👥 Manage Users
               {actionCount > 0 && <NotificationAdmin />}
             </NavLink>
             {cars.length > 0 && <NavLink
               to="/survey/create"
-              className="btn btn-outline-success rounded-pill mr-3 position-relative"
+              className="btn btn-outline-success bg-white rounded-pill mr-3 position-relative"
             >
               📝 Take Survey
               <NotificationSurvey />
