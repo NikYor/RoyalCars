@@ -1,10 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import CarsByCompany from "../components/CarsByCompany";
 import { getAllCompanies } from "../services/companyService";
+import { AuthContext } from "../context/AuthContext";
+
 
 const Companies = () => {
   const [companies, setCompanies] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState(null);
+  const { isAdmin } = useContext(AuthContext);
 
   useEffect(() => {
     async function fetchCompanies() {
@@ -15,44 +18,36 @@ const Companies = () => {
     fetchCompanies();
   }, []);
 
-  useEffect(() => {
-    const companyListElement = document.querySelector(".company-list");
-    console.log(companyListElement);
-    
-    if (selectedCompany) {
-      companyListElement.style.overflowY = "auto";
-      companyListElement.style.maxHeight = "90vh";
-    } else {
-      companyListElement.style.overflowY = "hidden";
-    }
-  }, [selectedCompany]);
-
   return (
     <div className="container-fluid p-0">
-      <div className="p-5 pb-3 company-list">
+      <div className={`p-5 pb-3 ${selectedCompany ? "catalog-scroll" : ""}`}>
         <h1 className="display-4 text-uppercase text-center mb-5">Companies</h1>
         <div className="row">
-          {companies.map((companyObj, idx) => {
+          {(selectedCompany ? 
+              companies.filter(companyObj => Object.keys(companyObj)[0] === selectedCompany.name) 
+              : companies
+            ).map((companyObj, idx) => {
             const companyName = Object.keys(companyObj)[0];
             const carsList = companyObj[companyName];
             const cash = carsList[0].company.cash?.toFixed(2);
             const isSelected = selectedCompany?.name === companyName;
 
             return (
-              <div className="col-md-4 mb-4" key={idx}>
+              <div className="col-md-3 mb-4" key={idx}>
                 <div className={`card h-100 shadow-light rounded-lg  ${isSelected ? "rent-item active" : ""}`}>
                   <div className="card-body d-flex flex-column">
                     <h2 className="card-title">{companyName}</h2>
                     <h4 className="card-text">Cars available: {carsList.length}</h4>
-                    <h3 className="card-text">Total : {cash}</h3>
+                    {isAdmin && 
+                    <h3 className="card-text">Total : {cash}</h3>}
                     <button
-                      className="btn btn-primary mt-auto rounded-pill"
+                      className="btn btn-primary w-50 align-self-center mt-auto rounded-pill"
                       onClick={() => setSelectedCompany({ name: companyName, cars: carsList })}
                     >
                       Show Cars
                     </button>
                     {selectedCompany && selectedCompany.name === companyName ?
-                      <button className="btn btn-secondary mt-3 border-white rounded-pill" onClick={() => setSelectedCompany(null)}>
+                      <button className="btn btn-secondary w-50 align-self-center mt-3 border-white rounded-pill" onClick={() => setSelectedCompany(null)}>
                         Close
                       </button> : null}
                   </div>
