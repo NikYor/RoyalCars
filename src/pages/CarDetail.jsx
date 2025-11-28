@@ -150,7 +150,7 @@ const CarDetail = () => {
               <li><strong>Owner:</strong> {car.createdBy.email}</li>
               <li><strong>Mileage:</strong> {carMileage} km</li>
               <li><strong>Status:</strong> {carStatus}</li>
-              <li><strong>Price:</strong> ${car.price}/day</li>
+              <li><strong>Price:</strong> ${car.price}/h</li>
             </ul>
             {car.name && <Link to={`/booking/${id}/${car.name}`} className="btn btn-primary mt-3 mb-3 rounded-pill">Book Now
             </Link>}

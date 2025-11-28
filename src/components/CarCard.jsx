@@ -28,7 +28,7 @@ const CarCard = ({ id, image, title, year, transmission, mileage, price }) => {
         </div>
         <div className="d-flex justify-content-center mb-4">
           {isLogged && <Link to={`/booking/${id}/${title}`} className="btn btn-primary px-3 mr-4 rounded-lg">
-            ${price}/Day – Book Now
+            ${price}/h – Book Now
           </Link>}
           <Link to={`/cars/${id}`} className="btn btn-primary px-3 rounded-lg">
             View Details
