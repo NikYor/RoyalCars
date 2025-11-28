@@ -25,7 +25,7 @@ const RouterConfig = () => {
   return (
     <Routes>
       <Route path="/about" element={<About />} />
-      <Route path="/bookings" element={<PrivateRoute><BookingList /></PrivateRoute>}/>
+      <Route path="/bookings" element={<AdminRoute><BookingList /></AdminRoute>}/>
       <Route path="/booking/:id/:title" element={<PrivateRoute><Booking /></PrivateRoute>}/>
       <Route path="/cars/:id" element={<CarDetail />} />
       <Route path="/catalog" element={<Catalog />} />
