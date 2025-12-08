@@ -103,6 +103,9 @@ schedule('*/1 * * * * *', async () => {
         carMileage: car.mileage,
         status: booking.status
       })
+      io.emit('carSurvey', {
+        carId: booking.car
+      })
       console.log(`[CRON-MOVE] Booking ${booking._id} completed`);
       continue;
     }

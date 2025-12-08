@@ -37,7 +37,6 @@ const Booking = () => {
 
   const disabledTimes = bookings
   .filter(b => {
-    // сравняваме датите като ISO string "YYYY-MM-DD"
     const bookingDate = b.pickupDate;
     const selectedDate = formData.pickupDate
       ? formData.pickupDate.toLocaleDateString("sv-SE")
@@ -45,23 +44,18 @@ const Booking = () => {
     return bookingDate === selectedDate;
   })
   .flatMap(b => {
-    // нормализираме pickupTime -> Date
     let start;
     if (typeof b.pickupTime === "string" && /^\d{2}:\d{2}$/.test(b.pickupTime)) {
-      // формат HH:mm
       const [hours, minutes] = b.pickupTime.split(":").map(Number);
       start = new Date(formData.pickupDate || new Date());
       start.setHours(hours, minutes, 0, 0);
     } else {
-      // ISO datetime
       start = new Date(b.pickupTime);
     }
 
-    // край = начало + продължителност
     const durationSeconds = parseInt(b.duration, 10) || 0;
     const end = new Date(start.getTime() + durationSeconds * 1000);
 
-    // генерираме всички минути в интервала
     const times = [];
     let current = new Date(start);
     while (current <= end) {

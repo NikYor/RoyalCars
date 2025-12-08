@@ -4,7 +4,6 @@ import { useEffect, useState, useRef } from 'react';
 import { socket } from "../utils/socket";
 import { GoogleMap, Marker, Polyline } from "@react-google-maps/api";
 import { useSelector, useDispatch } from "react-redux";
-import { addCompletedCar } from "../store/completedSlice";
 
 const containerStyle = {
   width: "100%",
@@ -113,8 +112,6 @@ const CarDetail = () => {
         setStatus(data.status);
         setCarStatus(data.carStatus)
         setCarMileage(data.carMileage)
-
-        dispatch(addCompletedCar({[data.carId]: new Date().toLocaleString('ro-RO')}));
       }
     });
 
