@@ -15,16 +15,24 @@ const config = loadConfig();
 const app = express()
 const httpServer = createServer(app);
 
+console.log(process.env.NODE_ENV);
+
+
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:4500",
+    origin: [
+      // "*"
+      "http://localhost:4500",
+      // "https://react-sept-2025.web.app",
+      // "https://react-sept-2025.firebaseapp.com"
+    ],
     credentials: true,
   },
 });
 
 app.use(cookieParser());
 app.use(cors({
-  origin: 'http://localhost:4500',
+  origin: "*",//'http://localhost:4500',
   credentials: true
 }));
 app.use(helmet());
@@ -42,8 +50,9 @@ io.on("connection", (socket) => {
 });
 
 // app.listen(config.server.port, () => console.log(`Server is running on ${config.server.port}`));
-httpServer.listen(config.server.port, () =>
-  console.log(`Server is running on ${config.server.port}`)
+const PORT = process.env.PORT || 3000;
+httpServer.listen(PORT, '0.0.0.0', () =>
+  console.log(`Server is running on ${PORT}`)
 );
 
 export { io };

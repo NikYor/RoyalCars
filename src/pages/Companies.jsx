@@ -2,19 +2,28 @@ import { useState, useEffect, useContext } from "react";
 import CarsByCompany from "../components/CarsByCompany";
 import { getAllCompanies } from "../services/companyService";
 import { AuthContext } from "../context/AuthContext";
-
+import { useDispatch } from "react-redux";
+import { setError, clearFeedback } from '../store/feedbackSlice';
 
 const Companies = () => {
   const [companies, setCompanies] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState(null);
   const { isAdmin } = useContext(AuthContext);
+  const dispatch = useDispatch()
 
   useEffect(() => {
+    dispatch(clearFeedback())
     async function fetchCompanies() {
-      const res = await getAllCompanies();
-      const data = res;
-      setCompanies(data);
-    }
+    try {
+        const res = await getAllCompanies();
+        const data = res;
+        setCompanies(data);
+      }
+      catch {
+        dispatch(setError('Failed to fetch companies'))
+      }
+    } 
+    
     fetchCompanies();
   }, []);
 
@@ -40,16 +49,21 @@ const Companies = () => {
                     <h4 className="card-text">Cars available: {carsList.length}</h4>
                     {isAdmin && 
                     <h3 className="card-text">Total : {cash}</h3>}
-                    <button
-                      className="btn btn-primary w-50 align-self-center mt-auto rounded-pill"
-                      onClick={() => setSelectedCompany({ name: companyName, cars: carsList })}
-                    >
-                      Show Cars
-                    </button>
+                    
                     {selectedCompany && selectedCompany.name === companyName ?
-                      <button className="btn btn-secondary w-50 align-self-center mt-3 border-white rounded-pill" onClick={() => setSelectedCompany(null)}>
+                      <button 
+                        className="btn btn-secondary w-50 align-self-center mt-3 border-white rounded-pill" 
+                        onClick={() => setSelectedCompany(null)}
+                      >
                         Close
-                      </button> : null}
+                      </button> : 
+                      <button
+                        className="btn btn-primary w-50 align-self-center mt-auto rounded-pill"
+                        onClick={() => setSelectedCompany({ name: companyName, cars: carsList })}
+                      >
+                        Show Cars
+                      </button>
+                    }
                   </div>
                 </div>
               </div>

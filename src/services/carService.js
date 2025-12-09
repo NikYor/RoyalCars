@@ -1,6 +1,6 @@
 import { secureFetch } from "./authService";
 
-const BASE_URL = 'http://localhost:3000/api/cars';
+const BASE_URL = `${import.meta.env.VITE_APP_SERVER}/cars`;
 
 export const getAllCars = async () => {
   const res = await fetch(BASE_URL);

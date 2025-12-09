@@ -5,7 +5,8 @@
   "database": {
     "host": "127.0.0.1",
     "port": 27017,
-    "name": "cars-app"
+    "name": "cars-app",
+    "uri": "mongodb+srv://niki:1234@cluster0.ismlb8i.mongodb.net/cars-app"
   },
   "app_cookie_name": "token",
   "jwt_secret": "239829831110013e77dxhn9999927",

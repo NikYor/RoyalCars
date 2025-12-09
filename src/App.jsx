@@ -16,7 +16,7 @@ function App() {
   const location = useLocation();
 
   const { isLoaded } = useGoogleMapsLoader()
-
+  
   useEffect(() => {
     dispatch(setLoaded(isLoaded));
 

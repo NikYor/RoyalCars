@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000/api/companies';
+const BASE_URL = `${import.meta.env.VITE_APP_SERVER}/companies`;
 
 export const getAllCompanies = async () => {
   const res = await fetch(`${BASE_URL}`, {

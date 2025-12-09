@@ -38,7 +38,7 @@ export async function createCar(req, res) {
 export async function updateCar(req, res) {
   try {
     const item = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!item) return res.status(404).json({ message: 'Събитието не е намерено' });
+    if (!item) return res.status(404).json({ message: 'Колата не е намерена' });
     res.json(item);
   } catch (err) {
     res.status(400).json({ message: 'Грешка при редакция', error: err.message });
@@ -47,13 +47,13 @@ export async function updateCar(req, res) {
 
 export async function deleteCar(req, res) {
   const item = await Item.findByIdAndDelete(req.params.id);
-  if (!item) return res.status(404).json({ message: 'Събитието не е намерено' });
-  res.json({ message: 'Събитието е изтрито' });
+  if (!item) return res.status(404).json({ message: 'Колата не е намерена' });
+  res.json({ message: 'Колата е изтрита' });
 }
 
 export async function registerUser(req, res) {
   const item = await Item.findById(req.params.id);
-  if (!item) return res.status(404).json({ message: 'Събитието не е намерено' });
+  if (!item) return res.status(404).json({ message: 'Колата не е намерена' });
 
   if (item.registeredUsers.includes(req.userId)) {
     return res.status(400).json({ message: 'Вече сте записан' });

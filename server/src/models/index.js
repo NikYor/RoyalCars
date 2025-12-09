@@ -8,6 +8,8 @@ const db = config.database
 console.log('Connected to MongoDb successfully');
 
 await mongoose.connect(`mongodb://${db.host}:${db.port}/${db.name}`);
+// const MONGO_URI = process.env.MONGO_URI
+// await mongoose.connect(`${MONGO_URI}`);
 const names = Object.keys(config.model)
 
 const Item = buildModelFromConfig(names[0], config.model);

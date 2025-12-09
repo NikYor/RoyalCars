@@ -3,16 +3,20 @@ import { getSurveys } from "../services/bookingService";
 import { AuthContext } from "../context/AuthContext";
 import { getCarById } from "../services/carService";
 import { getUserById } from "../services/authService";
+import { setError, clearFeedback } from '../store/feedbackSlice';
+import { useDispatch } from 'react-redux';
 
 const SurveyList = () => {
   const [surveys, setSurveys] = useState([]);
+  const dispatch = useDispatch()
   const [mappedSurveys, setMappedSurveys] = useState([]);
   const { token } = useContext(AuthContext);
 
   useEffect(() => {
     async function getSurveysList() {
+      dispatch(clearFeedback())
       try {
-        const res = await getSurveys(token); // [{ car, text, rating }]
+        const res = await getSurveys(token);
         setSurveys(res);
 
         const enriched = await Promise.all(
@@ -27,7 +31,7 @@ const SurveyList = () => {
                 userEmail: user.email,
               };
             } catch (err) {
-              console.error("Error loading car name:", err);
+              dispatch(setError("Error loading car name:", err));
               return {
                 ...survey,
                 carName: "Unknown Car",
@@ -37,8 +41,8 @@ const SurveyList = () => {
         );
 
         setMappedSurveys(enriched);
-      } catch (err) {
-        console.error("Error loading surveys:", err);
+      } catch {
+        dispatch(setError("Error loading surveys"));
       }
     }
 

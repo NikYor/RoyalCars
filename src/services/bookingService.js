@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000/api/booking'; // Replace with your actual backend URL
+const BASE_URL = `${import.meta.env.VITE_APP_SERVER}/booking`;
 
 export const getUserBookings = async (token) => {
   const res = await fetch(`${BASE_URL}/my`, {
@@ -68,7 +68,7 @@ export const bookingList = async (token) => {
 };
 
 export const saveSurvey = async (surveyData, token) => {
-  const res = await fetch(`http://localhost:3000/api/survey`, {
+  const res = await fetch(`${import.meta.env.VITE_APP_SERVER}/survey`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `${token}`,
@@ -81,7 +81,7 @@ export const saveSurvey = async (surveyData, token) => {
 }
 
 export const getSurveys = async (token) => {
-  const res = await fetch(`http://localhost:3000/api/survey`, {
+  const res = await fetch(`${import.meta.env.VITE_APP_SERVER}/survey`, {
     headers: {
       Authorization: `${token}`,
     }
