@@ -15,24 +15,25 @@ const config = loadConfig();
 const app = express()
 const httpServer = createServer(app);
 
-console.log(process.env.NODE_ENV);
-
-
 const io = new Server(httpServer, {
   cors: {
     origin: [
-      // "*"
       "http://localhost:4500",
-      // "https://react-sept-2025.web.app",
-      // "https://react-sept-2025.firebaseapp.com"
+      "https://react-sept-2025.web.app",
+      "https://react-sept-2025.firebaseapp.com"
     ],
-    credentials: true,
+    methods: ["GET", "POST"],
+    credentials: true
   },
 });
 
 app.use(cookieParser());
 app.use(cors({
-  origin: "*",//'http://localhost:4500',
+  origin: [
+    "http://localhost:4500",
+    "https://react-sept-2025.web.app",
+    "https://react-sept-2025.firebaseapp.com"
+  ],
   credentials: true
 }));
 app.use(helmet());

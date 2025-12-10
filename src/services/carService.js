@@ -4,6 +4,10 @@ const BASE_URL = `${import.meta.env.VITE_APP_SERVER}/cars`;
 
 export const getAllCars = async () => {
   const res = await fetch(BASE_URL);
+  console.log(import.meta.env.VITE_APP_SERVER);
+  
+  console.log(BASE_URL);
+  
   if (!res.ok) throw new Error('Failed to fetch cars');
   return res.json();
 };

@@ -1,5 +1,6 @@
 import { io } from "socket.io-client";
 
-export const socket = io(`${import.meta.env.VITE_APP_SERVER}`, {
+export const socket = io(`${import.meta.env.VITE_APP_SOCKET}`, {
+  transports: ["websocket"],
   withCredentials: true,
 });
