@@ -31,7 +31,7 @@ const Navbar = () => {
 
               {isAdmin ? (
               <div className="nav-item dropdown">
-                <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Cars</a>
+                <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Rentals</a>
                 <div className="dropdown-menu rounded-0 m-0">
                   <NavLink to="/catalog" className="dropdown-item">Catalog</NavLink>
                   <NavLink to="/bookings" className="dropdown-item">Bookings</NavLink>
@@ -41,13 +41,17 @@ const Navbar = () => {
                   <NavLink to="/catalog" className="nav-item nav-link">Catalog</NavLink>
               )}
 
-              <div className="nav-item dropdown">
-                <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                <div className="dropdown-menu rounded-0 m-0">
-                  <NavLink to="/companies" className="dropdown-item">Companies</NavLink>
-                  <NavLink to="/survey/list" className="dropdown-item">Surveys</NavLink>
-                </div>
-              </div>
+              {isAuthenticated ? (
+                <div className="nav-item dropdown">
+                  <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                  <div className="dropdown-menu rounded-0 m-0">
+                    <NavLink to="/companies" className="dropdown-item">Companies</NavLink>
+                    <NavLink to="/survey/list" className="dropdown-item">Surveys</NavLink>
+                  </div>
+                </div> 
+              ) : (
+                <NavLink to="/companies" className="nav-item nav-link">Companies</NavLink>
+              )}
               
               <NavLink to="/about" className="nav-item nav-link">About</NavLink>
 
