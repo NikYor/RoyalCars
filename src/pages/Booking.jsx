@@ -86,7 +86,7 @@ const Booking = () => {
 
     const token = localStorage.getItem('token');
     
-    if (!token || !userId) {
+    if (!token) {
       alert('You must be logged in to book a car.');
       return;
     }
@@ -166,7 +166,7 @@ const Booking = () => {
           <button type="button" className="btn btn-secondary px-5 mr-5 rounded-pill" onClick={() => navigate(-1)}>
             Cancel
           </button>
-          <button type="submit" className="btn btn-primary px-5 rounded-pill">
+          <button type="submit" disabled={!userId} className="btn btn-primary px-5 rounded-pill">
             Confirm Booking
           </button>
         </div>

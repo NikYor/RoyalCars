@@ -74,11 +74,11 @@ export const logoutRequest = async () => {
   if (!res.ok) throw new Error('Logout failed');
 };
 
-export const registerRequest = async (email, password, role = 'user') => {
+export const registerRequest = async (email, password, role = 'user', company) => {
   const res = await fetch(`${BASE_URL}/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password, role }),
+    body: JSON.stringify({ email, password, role, company }),
   });
 
   if (!res.ok) {
@@ -134,6 +134,7 @@ export const getUserById = async (userId) => {
   return await res.json();
 };
 
-
-
-
+export const getUsersCount = async () => {
+  const res = await fetch(`${BASE_URL}/users/count`)
+  return await res.json();
+}

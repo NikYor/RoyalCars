@@ -36,15 +36,50 @@ async function fetchRoutePolyline(origin, destination) {
   };
 }
 
+function getDateTimeStrings(isProd = false) {
+  const now = new Date();
+
+  if (isProd) {
+    const formatter = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'Europe/Sofia',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    });
+    const [year, month, day] = formatter.format(now).split('-');
+    const dateStr = `${year}-${month}-${day}`;
+
+    const timeFormatter = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/Sofia',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    });
+    const timeStr = timeFormatter.format(now);
+    console.log('-------------> date time: ', dateStr,'-', timeStr);
+    
+    return { dateStr, timeStr };
+  } else {
+    const dateStr = now.toLocaleDateString('en-CA');
+    const timeStr = now.toTimeString().slice(0, 5);
+    return { dateStr, timeStr };
+  }
+}
+
 schedule('* * * * *', async () => {
   const now = new Date();
-  console.log(`[CRON] Running at ${now.toISOString()}`);
+  console.log('NODE_ENV:', process.env.NODE_ENV);
+  const { dateStr, timeStr } = getDateTimeStrings(process.env.NODE_ENV === 'production');
+  console.log(`[CRON] Running at ${dateStr} ${timeStr}`);
 
   const bookings = await Booking.find({
-    pickupDate: now.toLocaleDateString('en-CA'),
-    pickupTime: { $lte: now.toTimeString().slice(0, 5) },
+    pickupDate: dateStr,
+    pickupTime: { $lte: timeStr },
     status: 'scheduled'
   });
+
+  console.log('--------------------------------> Bookings: ', bookings);
+  
 
   for (const booking of bookings) {
     try {
@@ -112,11 +147,11 @@ schedule('*/1 * * * * *', async () => {
 
     const nextPoint = decodedRoute[booking.currentIndex];
 
-    const car = await Item.findByIdAndUpdate(booking.car, {
-      lat: nextPoint.lat,
-      lng: nextPoint.lng,
-      status: 'in use'
-    });
+    const car = await Item.findByIdAndUpdate(
+      booking.car, 
+      {lat: nextPoint.lat, lng: nextPoint.lng, status: 'in use'},
+      { new: true }
+    );
 
     booking.lat = nextPoint.lat;
     booking.lng = nextPoint.lng;

@@ -20,7 +20,7 @@ export async function getUserById(req, res) {
 }
 
 export async function register(req, res) {
-  const { email, password } = req.body;
+  const { email, password, company } = req.body;
 
   try {
     const existingUsers = await User.find({});
@@ -30,6 +30,9 @@ export async function register(req, res) {
     if (existingUser) {
       return res.status(400).json({ message: 'Имейлът вече е регистриран' });
     }
+    
+    const firstCompany = new Company({ name: company });
+    await firstCompany.save();
 
     const hashedPassword = await hash(password, 10);
 
@@ -37,6 +40,7 @@ export async function register(req, res) {
       email,
       password: hashedPassword,
       role,
+      company: firstCompany._id,
     });
 
     await newUser.save();
@@ -93,13 +97,15 @@ export async function login(req, res) {
       { expiresIn: '7d' }
     );
 
+    const isProd = process.env.NODE_ENV === 'production';
+
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'Strict',
+      secure: isProd,
+      sameSite: isProd ? 'none' : "Strict",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
-
+    
     res.json({
       token: accessToken,
       user: { email: user.email, role: user.role },
@@ -180,5 +186,14 @@ export async function getPendingAdminRequests(req, res) {
     res.json({ users });
   } catch (err) {
     res.status(500).json({ message: 'Грешка при заявките', error: err.message });
+  }
+}
+
+export async function getUserCount(req, res) {
+  try {
+    const userCount = await User.countDocuments({})
+    res.status(200).json({ userCount })
+  } catch {
+    res.status(404).json({message: 'No users found'})
   }
 }
